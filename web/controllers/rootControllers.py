@@ -1,4 +1,8 @@
-from flask import render_template , request as req , redirect , flash
+from flask import (render_template , 
+                    request as req , 
+                    redirect , 
+                    flash , 
+                    session)
 import models
 import re
 regex = r'\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b'
@@ -34,6 +38,7 @@ def loginUser():
         flash('Credentials dont meet criteria')
         return redirect('/register')
     if models.user.User(username=username,password=password).doesExist():
+        session['username']=username
         flash('You are logged in')
         return redirect('/')
 

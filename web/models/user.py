@@ -28,7 +28,14 @@ class User():
             flag=False
         return flag
 
-    def doesExist(self):
+    def doesExist(self,login=0):
+        if login==1:
+            try:
+                flag=get.getDb.deplo.user.find_one({"username":self.username,"password":self.password})
+                return flag
+            except Exception as e:
+                print(e)
+                return False
         try:
             username=get.getDb().deplo.user.find_one({"username":self.username})
             email=get.getDb().deplo.user.find_one({"email":self.email})

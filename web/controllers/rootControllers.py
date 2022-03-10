@@ -28,7 +28,12 @@ def registerUser():
         return redirect('/register')
 
 def loginUser():
-    username=req.form['username']
-    password=req.form['password']
-    return redirect('/')
+    username=req.form['username'].strip()
+    password=req.form['password'].strip()
+    if (username == "" or  password=="") or (not username.isalnum() or not len(password)>=8):
+        flash('Credentials dont meet criteria')
+        return redirect('/register')
+    if models.user.User(username=username,password=password).doesExist():
+        flash('You are logged in')
+        return redirect('/')
 

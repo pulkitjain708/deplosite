@@ -8,7 +8,7 @@ import re
 regex = r'\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b'
 
 def sendSlash():
-    return render_template('index.html')
+    return render_template('main.html')
 
 def sendLogin():
     return render_template('login.html')
@@ -39,6 +39,5 @@ def loginUser():
         return redirect('/register')
     if models.user.User(username=username,password=password).doesExist():
         session['username']=username
-        flash('You are logged in')
-        return redirect('/')
+        return redirect('/dashboard')
 

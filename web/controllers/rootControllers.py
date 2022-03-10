@@ -8,13 +8,13 @@ import re
 regex = r'\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b'
 
 def sendSlash():
-    return render_template('main.html')
+    return render_template('separate/main.html')
 
 def sendLogin():
-    return render_template('login.html')
+    return render_template('separate/login.html')
 
 def sendRegister():
-    return render_template('register.html')
+    return render_template('separate/register.html')
 
 def registerUser():
     username=req.form['username'].strip()
@@ -36,8 +36,8 @@ def loginUser():
     password=req.form['password'].strip()
     if (username == "" or  password=="") or (not username.isalnum() or not len(password)>=8):
         flash('Credentials dont meet criteria')
-        return redirect('/register')
-    if models.user.User(username=username,password=password).doesExist():
+        return redirect('/login')
+    if models.user.User(username=username,password=password).doesExist(login=1):
         session['username']=username
         return redirect('/dashboard')
 

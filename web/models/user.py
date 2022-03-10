@@ -31,19 +31,21 @@ class User():
     def doesExist(self,login=0):
         if login==1:
             try:
-                flag=get.getDb.deplo.user.find_one({"username":self.username,"password":self.password})
+                flag=get.getDb().deplo.user.find_one({"username":self.username,"password":self.password})
+                print('flag value : ',flag,file=sys.stdout)
                 return flag
             except Exception as e:
-                print(e)
+                print(e,file=sys.stdout)
                 return False
-        try:
-            username=get.getDb().deplo.user.find_one({"username":self.username})
-            email=get.getDb().deplo.user.find_one({"email":self.email})
-            if (username and email) or (username or email):
+        else:
+            try:
+                username=get.getDb().deplo.user.find_one({"username":self.username})
+                email=get.getDb().deplo.user.find_one({"email":self.email})
+                if (username and email) or (username or email):
+                    flag=True
+                else:
+                    flag=False
+            except Exception as e:
                 flag=True
-            else:
-                flag=False
-        except Exception as e:
-            flag=True
-            print(e)
-        return flag
+                print(e)
+            return flag

@@ -1,5 +1,19 @@
 from flask import (render_template,
-                    request as req)
+                    request as req,
+                    session)
 
 def sendDash():
-    return render_template('dashboard.html')
+    username=session['username']
+    return render_template('dashpages/dash.html',username=username,page="Dashboard")
+
+def sendListSites():
+    username=session['username']
+    return render_template('dashpages/dash.html',username=username,page="List Sites")
+
+def sendStats():
+    username=session['username']
+    return render_template('dashpages/stats.html',username=username,page="Statistics")
+
+def sendNewSite():
+    username=session['username']
+    return render_template('dashpages/dash.html',username=username,page="New Site")

@@ -20,7 +20,7 @@ class User():
             flag=self.doesExist()
             if flag == False:
                 get.getDb().deplo.user.insert_one(self.user)
-                flag=True
+                return True
             else:
                 flag=False
         except Exception as e:

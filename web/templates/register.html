@@ -1,3 +1,4 @@
+{% include 'alert.html' %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -23,7 +24,7 @@
             <h1 class="text-4xl font-bold text-white text-center">Deplosite</h1>
         </a>
     </header> -->
-
+    {% block alert %} {% endblock %}
     <main class="bg-white max-w-lg mx-auto p-8 md:p-12 my-10 rounded-lg shadow-2xl">
         <section>
             <h3 class="font-bold text-2xl">Welcome to Deplosite</h3>

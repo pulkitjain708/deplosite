@@ -16,4 +16,4 @@ def sendStats():
 
 def sendNewSite():
     username=session['username']
-    return render_template('dashpages/dash.html',username=username,page="New Site")
+    return render_template('dashpages/deploy-options.html',username=username,page="New Site")

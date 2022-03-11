@@ -1,0 +1,68 @@
+{% include "layout/dashboard-layout.html" %}
+
+{% block content %}
+
+<br>
+<div class="flex items-center justify-center h-screen">
+	<div class="bg-indigo-800 text-white font-bold rounded-lg border shadow-lg p-5">
+        <div class="flex">
+            <div class="flex-initial p-5">
+                <div class="card w-50 glass">
+                    <figure><img height="250px" width="300px" src="https://th.bing.com/th/id/OIP.EZbCDLhugsUfbpEWktI7bQHaE3?pid=ImgDet&rs=1" alt="car!"></figure>
+                    <div class="card-body">
+                      <h2 class="card-title">Static Site</h2>
+                      <p>Amazon Simple Storage Service</p>
+                      <div class="card-actions justify-end">
+                        <a href="#static" class="btn">GO</a>
+                      </div>
+                    </div>
+                  </div>
+            </div>
+            <div class="flex-initial p-5 ">
+                <div class="card w-50 glass">
+                    <figure><img height="250px" width="300px" src="https://st.depositphotos.com/1756445/4385/i/950/depositphotos_43853619-stock-photo-word-cloud-programming-languages-or.jpg" alt="car!"></figure>
+                    <div class="card-body">
+                      <h2 class="card-title">Dynamic Site</h2>
+                      <p>Amazon Elastic Compute Cloud</p>
+                      <div class="card-actions justify-end">
+                        <a href="#dynamic" class="btn">GO</a>
+                      </div>
+                    </div>
+                  </div>
+            </div>
+          </div>
+</div>
+</div>
+
+<div class="modal" id="dynamic">
+  <div class="modal-box">
+    <h3 class="font-bold text-lg">Upload your Dynamic Zip</h3>
+    <p class="py-4">Enter Project Details</p>
+    <input type="text" placeholder="Title" class="input input-ghost w-full max-w-xs">
+    <div class="modal-action">
+     <a href="#" class="btn">Upload</a>
+    </div>
+  </div>
+</div>
+
+<div class="modal" id="static">
+    <div class="modal-box">
+      <h3 class="font-bold text-lg">Upload your Static Zip</h3>
+      <p class="py-4">Enter Project Details</p>
+      <input type="text" placeholder="Title" class="input input-ghost w-full max-w-xs">
+      <input type="text" placeholder="Root File" class="input w-full input-ghost w-full max-w-xs">
+      <textarea class="textarea textarea-ghost w-full" placeholder="Description"></textarea>
+          <input type="file" class="block w-full text-sm text-slate-500
+            file:mr-4 file:py-2 file:px-4
+            file:rounded-full file:border-0
+            file:text-sm file:font-semibold
+            file:bg-violet-50 file:text-violet-700
+            hover:file:bg-violet-100
+          "/>      
+      <div class="modal-action">
+       <a href="#" class="btn">Upload</a>
+      </div>
+    </div>
+  </div>
+
+{% endblock %}

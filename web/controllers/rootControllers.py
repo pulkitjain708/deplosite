@@ -41,3 +41,8 @@ def loginUser():
         session['username']=username
         return redirect('/dashboard')
 
+
+def logout():
+    session.pop('username',None)
+    return redirect('/')
+

@@ -1,7 +1,6 @@
 {% include "layout/dashboard-layout.html" %}
 
 {% block content %}
-
 <br>
 <div class="flex items-center justify-center h-screen">
 	<div class="bg-indigo-800 text-white font-bold rounded-lg border shadow-lg p-5">
@@ -50,9 +49,9 @@
       <h3 class="font-bold text-lg">Upload your Static Zip</h3>
       <p class="py-4">Enter Project Details</p>
       <form action="/upload/static" method="POST" enctype="multipart/form-data">
-      <input type="text" placeholder="Title" class="input input-ghost w-full max-w-xs">
-      <input type="text" placeholder="Root File" class="input w-full input-ghost w-full max-w-xs">
-      <textarea class="textarea textarea-ghost w-full" placeholder="Description"></textarea>
+      <input type="text" name="title" placeholder="Title" class="input input-ghost w-full max-w-xs">
+      <input type="text" name="root" placeholder="Root File" class="input w-full input-ghost w-full max-w-xs">
+      <textarea name="description" class="textarea textarea-ghost w-full" placeholder="Description"></textarea>
           <input type="file" 
           name="file"
           class="block w-full text-sm text-slate-500

@@ -3,11 +3,12 @@ from flask import (render_template,
                    redirect,
                    flash,
                    session)
-from config import UPLOAD_PATH,ALLOWED
+from config import UPLOAD_PATH, ALLOWED
 from werkzeug.utils import secure_filename
 import os
 from shutil import unpack_archive
 from helper import checkStatic
+
 
 def static():
     '''
@@ -34,11 +35,14 @@ def static():
         errs += ' The Uploading file is not specified or is not zip .'
     if(errs == ""):
         filename = secure_filename(filename)
-        file.save(os.path.join(UPLOAD_PATH,"zipped", filename))
-        unpack_archive(os.path.join(UPLOAD_PATH,"zipped",filename),os.path.join(UPLOAD_PATH,"unzipped", filename))
-        absPath=os.path.join(UPLOAD_PATH,"unzipped", filename)
-        flag,message=checkStatic(dir=absPath,allowed=ALLOWED,rootFile=root)
-        flash(message)
+        file.save(os.path.join(UPLOAD_PATH, "zipped", filename))
+        unpack_archive(os.path.join(UPLOAD_PATH, "zipped", filename),
+                       os.path.join(UPLOAD_PATH, "unzipped", filename))
+        absPath = os.path.join(UPLOAD_PATH, "unzipped", filename)
+        flag, message = checkStatic(
+            dir=absPath, allowed=ALLOWED, rootFile=root)
+        if flag:
+            flash(message+", Try Checking Status in List of Deployments")
     else:
         flash(errs)
     return redirect('/dashboard/new-site')

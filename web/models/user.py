@@ -1,6 +1,5 @@
 from . import get
 import sys
-from flask import flash
 
 class User():
     user={}

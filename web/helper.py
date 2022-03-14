@@ -59,10 +59,11 @@ def create_bucket(bucketName='',error="",index="",region="ap-south-1"):
         }
         bucket_policy = json.dumps(bucket_policy)
         s3_client.put_bucket_policy(Bucket=bucketName, Policy=bucket_policy)
+        return s3_client.get_bucket_website(Bucket=bucketName)
     except ClientError as e:
         logging.error(e)
         return False
-    return True
+    # return True
 
 def uploadFiles(dir="", bucket=''):
     if dir == "" or bucket == "":

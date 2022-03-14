@@ -2,7 +2,6 @@ import config
 from pymongo import MongoClient
 
 
-def getDb():
+def getDb(collection=None):
     mongo = MongoClient(config.MONGO_URI)
-    deplo=mongo.deplo
-    return deplo
+    return mongo.deplo[collection] if collection else mongo.deplo

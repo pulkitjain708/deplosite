@@ -8,7 +8,7 @@ def sendDash():
 
 def sendListSites():
     username=session['username']
-    return render_template('dashpages/dash.html',username=username,page="List Sites")
+    return render_template('dashpages/listSites.html',username=username,page="List Sites")
 
 def sendStats():
     username=session['username']

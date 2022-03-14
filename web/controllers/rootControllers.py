@@ -37,7 +37,9 @@ def loginUser():
     if (username == "" or  password=="") or (not username.isalnum() or not len(password)>=8):
         flash('Credentials dont meet criteria')
         return redirect('/login')
-    if models.user.User(username=username,password=password).doesExist(login=1):
+    user=models.user.User(username=username,password=password).doesExist(login=1)
+    if user:
+        session['id']=user["_id"]
         session['username']=username
         return redirect('/dashboard')
 

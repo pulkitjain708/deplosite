@@ -1,0 +1,38 @@
+from . import get
+import sys
+import config
+from pymongo import MongoClient
+
+
+def getDb(collection="static"):
+    mongo = MongoClient(config.MONGO_URI)
+    return mongo.deplo[collection] if collection else mongo.deplo
+
+
+class Site():
+    site = {}
+
+    def __init__(self, objectId="", title="", root="index.html", description="", error="index.html", bucketName="", url=""):
+        self.site = {
+            "userRef": objectId,
+            "title": title,
+            "root": root,
+            "error": error,
+            "desc": description,
+            'bucketName': bucketName,
+            'url': url
+        }
+
+    def save(self):
+        try:
+            getDb().static.insert_one(self.site)
+        except Exception as e:
+            print(e)
+
+    def getStaticSitesByUser(self,refId):
+        try:
+            return getDb().static.find({"userRef":refId})
+        except Exception as e:
+            print(e)
+
+            

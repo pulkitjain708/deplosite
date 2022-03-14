@@ -5,6 +5,8 @@ from os import walk, path
 from platform import system
 import json
 
+s3 = boto3.client('s3')
+
 
 def create_bucket(bucketName='www.deplosite-pulkit-pes-project.com', region="ap-south-1"):
     try:
@@ -55,12 +57,14 @@ def uploadFiles(dir="C:\\Users\intern\\project\\uploads\\unzipped\\1", bucket='w
             try:
                 ExtraArgs = {}
                 if file.rsplit('.', 1)[1] in ['html', 'htm']:
-                    ExtraArgs = {'ContentType': 'text/html','ContentDisposition':'text/html'}
+                    ExtraArgs = {'ContentType': 'text/html'}
                 objectName = '{}/{}'.format(relativePath,
                                             file).replace("\\", "/")[1:]
                 v = file if index == 0 else objectName
-                response = s3_client.upload_file(
-                    path.join(root, file), bucket, v, ExtraArgs=ExtraArgs)
+                s3.put_object(Body=open(path.join(root, file),mode='rb'),
+                              Bucket=bucket,
+                              Key=v,
+                              ContentType='text/html')
             except ClientError as e:
                 logging.error(e)
 

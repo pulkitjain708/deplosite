@@ -7,8 +7,8 @@ from config import UPLOAD_PATH, ALLOWED
 from werkzeug.utils import secure_filename
 import os
 from shutil import unpack_archive
-from helper import checkStatic
-
+from helper import checkStatic,uploadFiles,create_bucket
+from random import randint
 
 def static():
     '''
@@ -25,6 +25,7 @@ def static():
     description = req.form['description'].strip()
     file = req.files['file']
     filename = file.filename
+    bucketName="www.{}-{}-deplosite.com".format(title,randint(999,99999))
     parsed_name, ext = filename.rsplit(".", 1)
     username = session['username']
     if title == "" or root == "" or description == "":
@@ -41,8 +42,11 @@ def static():
         absPath = os.path.join(UPLOAD_PATH, "unzipped", filename)
         flag, message = checkStatic(
             dir=absPath, allowed=ALLOWED, rootFile=root)
-        if flag:
-            flash(message+", Try Checking Status in List of Deployments")
+        # if flag:
+        #     flash(message+", Try Checking Status in List of Deployments")
+        create_bucket(bucketName=bucketName,error=root,index=root)
+        uploadFiles(dir=absPath,bucket=bucketName)
+        return redirect('/dashboard/new-site')
     else:
         flash(errs)
     return redirect('/dashboard/new-site')

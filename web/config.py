@@ -18,4 +18,4 @@ if system()=="Windows":
 elif system()=="Linux":
     UPLOAD_PATH='~/deplosite/uploads'
 
-ALLOWED=['htm','html','js','css','png','jpeg','jpg','txt','csv']
+ALLOWED=['htm','html','js','css','png','jpeg','jpg','txt','csv','svg']

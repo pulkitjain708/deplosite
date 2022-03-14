@@ -39,7 +39,8 @@ def loginUser():
         return redirect('/login')
     user=models.user.User(username=username,password=password).doesExist(login=1)
     if user:
-        session['id']=user["_id"]
+        # print(user["_id"])
+        session['id']=str(user["_id"])
         session['username']=username
         return redirect('/dashboard')
 

@@ -13,6 +13,10 @@ def mimeType(ext):
         mime="text/html"
     elif ext=="js":
         mime="application/javascript"
+    elif ext=="png":
+        mime="image/png"
+    elif ext=="svg":
+        mime="image/svg+xml"
     return mime    
         
 def checkStatic(dir="", allowed=[], rootFile=""):
@@ -28,10 +32,15 @@ def checkStatic(dir="", allowed=[], rootFile=""):
                 return False, "No Files Found to Serve "
         if len(files) != 0:
             for file in files:
-                ext = file.rsplit('.', 1)[1]
-                if ext not in allowed:
+                try:
+                    ext = file.rsplit('.', 1)[1]
+                    if ext not in allowed:
+                        purepath = path.join(root, file)
+                        remove(purepath)
+                except Exception as e:
                     purepath = path.join(root, file)
                     remove(purepath)
+                    print(e)
 
     return True, "Operation Completed"
 

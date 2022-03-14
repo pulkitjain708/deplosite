@@ -29,9 +29,9 @@ class Site():
         except Exception as e:
             print(e)
 
-    def getStaticSitesByUser(self,refId):
+    def getStaticSitesByUser(self,refId,projection):
         try:
-            return getDb().static.find({"userRef":refId})
+            return getDb().static.find({"userRef":refId},projection)
         except Exception as e:
             print(e)
 

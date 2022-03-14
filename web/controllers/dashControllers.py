@@ -1,6 +1,7 @@
 from flask import (render_template,
                     request as req,
                     session)
+from models.staticSite import Site
 
 def sendDash():
     username=session['username']
@@ -8,7 +9,10 @@ def sendDash():
 
 def sendListSites():
     username=session['username']
-    return render_template('dashpages/listSites.html',username=username,page="List Sites")
+    id=session['id']
+    projection={"title":1,"url":1,"_id":0}
+    lst=Site().getStaticSitesByUser(id,projection)
+    return render_template('dashpages/listSites.html',username=username,page="List Sites",sites=lst)
 
 def sendStats():
     username=session['username']

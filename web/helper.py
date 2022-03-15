@@ -15,6 +15,15 @@ def getThumbnail(url):
         res=json.load(f)
         return res['url']
 
+def removeBucket(bucketName):
+    cmd='aws s3 rb --force s3://{}'.format(bucketName)
+    response=os.popen(cmd).read()
+    if "remove_bucket" in response.split(":"):
+        return True
+    else:
+        return False 
+
+
 def mimeType(ext):
     mime = ""
     if ext == 'css':
@@ -114,3 +123,5 @@ def uploadFiles(dir="", bucket=''):
                 logging.error(e)
                 return False, "Error.."
     return True, "Website Up .."
+
+

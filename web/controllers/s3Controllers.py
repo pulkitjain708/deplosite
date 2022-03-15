@@ -7,7 +7,7 @@ from config import UPLOAD_PATH, ALLOWED
 from werkzeug.utils import secure_filename
 import os
 from shutil import unpack_archive
-from helper import checkStatic, uploadFiles, create_bucket,getThumbnail
+from helper import checkStatic, uploadFiles, create_bucket,getThumbnail,removeBucket
 from random import randint
 from models.staticSite import Site
 
@@ -57,3 +57,13 @@ def static():
     else:
         flash(errs)
     return redirect('/dashboard/new-site')
+
+
+def delete(bucketName):
+    flag=removeBucket(bucketName)
+    if flag:
+        flash("Removed Bucket..")
+    else:
+        flash("Error Removing Bucket ..")
+    return redirect("/dashboard/list-sites")
+

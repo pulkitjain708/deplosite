@@ -23,7 +23,7 @@ def static():
     '''
     errs = ""
     id = session['id']
-    title = req.form['title'].strip()
+    title = req.form['title'].strip().lower()
     root = req.form['root'].strip()
     description = req.form['description'].strip()
     file = req.files['file']

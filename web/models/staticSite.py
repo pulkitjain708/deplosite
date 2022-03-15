@@ -12,7 +12,7 @@ def getDb(collection="static"):
 class Site():
     site = {}
 
-    def __init__(self, objectId="", title="", root="index.html", description="", error="index.html", bucketName="", url=""):
+    def __init__(self, objectId="", title="", root="index.html", description="", error="index.html", bucketName="", url="",img=""):
         self.site = {
             "userRef": objectId,
             "title": title,
@@ -20,7 +20,8 @@ class Site():
             "error": error,
             "desc": description,
             'bucketName': bucketName,
-            'url': url
+            'url': url,
+            'img':img
         }
 
     def save(self):

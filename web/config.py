@@ -13,9 +13,16 @@ MONGO_URI='mongodb+srv://root:root@deplo.tevs8.mongodb.net/{DATABASE}?retryWrite
 
 MAX_CONTENT_LENGTH=15*1000*1000
 
+#for linux
+# '~/project/uploads'
+#for wsl
+#/mnt/c/Users/intern/project/uploads
 if system()=="Windows":
     UPLOAD_PATH="C:\\Users\\intern\\project\\uploads\\"
 elif system()=="Linux":
-    UPLOAD_PATH='~/deplosite/uploads'
+    UPLOAD_PATH='/mnt/c/Users/intern/project/uploads'
 
 ALLOWED=['htm','html','js','css','png','jpeg','jpg','txt','csv','svg']
+
+HCTI_ID="847ba16c-d12f-4720-83d6-efa8bd9eeaeb"
+HCTI_KEY="68444419-2562-4eda-9342-a012ccb4d5c9"

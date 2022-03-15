@@ -1,5 +1,4 @@
-from flask import Flask
-from flask_mongoengine import MongoEngine
+from flask import Flask 
 import config
 import routes
 

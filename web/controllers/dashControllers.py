@@ -10,7 +10,7 @@ def sendDash():
 def sendListSites():
     username=session['username']
     id=session['id']
-    projection={"title":1,"url":1,"_id":0}
+    projection={"title":1,"url":1,"_id":0,"img":1}
     lst=Site().getStaticSitesByUser(id,projection)
     return render_template('dashpages/listSites.html',username=username,page="List Sites",sites=lst)
 

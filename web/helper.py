@@ -4,21 +4,32 @@ import logging
 from botocore.exceptions import ClientError
 from platform import system
 import json
+from config import HCTI_ID, HCTI_KEY
+import os
+import requests
+from requests.exceptions import HTTPError
+
+def getThumbnail(url):
+    response=os.popen("""curl -X POST https://hcti.io/v1/image -u '{}:{}' --data-urlencode url='{}' > out.json """.format(HCTI_ID, HCTI_KEY,url)).read()
+    with open('out.json') as f:
+        res=json.load(f)
+        return res['url']
 
 def mimeType(ext):
-    mime=""
-    if ext=='css':
-        mime="text/css"
-    elif ext=='html':
-        mime="text/html"
-    elif ext=="js":
-        mime="application/javascript"
-    elif ext=="png":
-        mime="image/png"
-    elif ext=="svg":
-        mime="image/svg+xml"
-    return mime    
-        
+    mime = ""
+    if ext == 'css':
+        mime = "text/css"
+    elif ext == 'html':
+        mime = "text/html"
+    elif ext == "js":
+        mime = "application/javascript"
+    elif ext == "png":
+        mime = "image/png"
+    elif ext == "svg":
+        mime = "image/svg+xml"
+    return mime
+
+
 def checkStatic(dir="", allowed=[], rootFile=""):
     if dir == "" or len(allowed) == 0 or rootFile == "":
         return False, "No specifications provided"
@@ -44,7 +55,8 @@ def checkStatic(dir="", allowed=[], rootFile=""):
 
     return True, "Operation Completed"
 
-def create_bucket(bucketName='',error="",index="",region="ap-south-1"):
+
+def create_bucket(bucketName='', error="", index="", region="ap-south-1"):
     try:
         s3_client = boto3.client('s3', region_name=region)
         location = {'LocationConstraint': region}
@@ -88,7 +100,9 @@ def uploadFiles(dir="", bucket=''):
         relativePath = root.split(delimiter+rootPath)[1]
         for file in files:
             try:
-                ext =  file.rsplit('.', 1)[1]
+                if "." not in file:
+                    continue
+                ext = file.rsplit('.', 1)[1]
                 objectName = '{}/{}'.format(relativePath,
                                             file).replace("\\", "/")[1:]
                 v = file if index == 0 else objectName
@@ -98,5 +112,5 @@ def uploadFiles(dir="", bucket=''):
                                      ContentType=mimeType(ext))
             except ClientError as e:
                 logging.error(e)
-                return False,"Error.."
-    return True,"Website Up .."
+                return False, "Error.."
+    return True, "Website Up .."

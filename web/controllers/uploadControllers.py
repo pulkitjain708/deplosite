@@ -7,7 +7,7 @@ from config import UPLOAD_PATH, ALLOWED
 from werkzeug.utils import secure_filename
 import os
 from shutil import unpack_archive
-from helper import checkStatic, uploadFiles, create_bucket
+from helper import checkStatic, uploadFiles, create_bucket,getThumbnail
 from random import randint
 from models.staticSite import Site
 
@@ -28,7 +28,7 @@ def static():
     description = req.form['description'].strip()
     file = req.files['file']
     filename = file.filename
-    bucketName = "www.{}-{}-deplosite.com".format(title, randint(999, 99999))
+    bucketName = "{}-{}-deplosite.co".format(title, randint(999, 99999))
     url = "http://{}.s3-website.ap-south-1.amazonaws.com/".format(bucketName)
     parsed_name, ext = filename.rsplit(".", 1)
     username = session['username']
@@ -50,8 +50,9 @@ def static():
         #     flash(message+", Try Checking Status in List of Deployments")
         create_bucket(bucketName=bucketName, error=root, index=root)
         uploadFiles(dir=absPath, bucket=bucketName)
+        imgUrl=getThumbnail(url)
         Site(objectId=id, title=title, root=root, description=description,
-             error=root, bucketName=bucketName, url=url).save()
+             error=root, bucketName=bucketName, url=url,img=imgUrl).save()
         return redirect('/dashboard/new-site')
     else:
         flash(errs)

@@ -5,7 +5,7 @@
     {% for site in sites %}
     <div class="card w-50 bg-base-100 shadow-xl image-full">
         <figure>
-          <img src="https://api.lorem.space/image/shoes?w=400&h=225" alt="Shoes" />
+          <img src="{{ site.img }}" alt="{{ site.title }}" />
         </figure>
         <div class="card-body">
           <h2 class="card-title">{{ site.title }}</h2>

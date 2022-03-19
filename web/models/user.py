@@ -1,5 +1,16 @@
-from . import get
+# from . import get
 import sys
+import config
+from pymongo import MongoClient
+
+
+def getDb(collection="user"):
+    try:
+        mongo = MongoClient(config.MONGO_URI)
+        print("Connection Object , ",mongo)
+        return mongo.deplo[collection] if collection else mongo.deplo
+    except Exception as e:
+        print(e," : Error at Connecting DB")
 
 class User():
     user={}
@@ -18,7 +29,7 @@ class User():
         try:
             flag=self.doesExist()
             if flag == False:
-                get.getDb().deplo.user.insert_one(self.user)
+                getDb().insert_one(self.user)
                 return True
             else:
                 flag=False
@@ -30,7 +41,7 @@ class User():
     def doesExist(self,login=0):
         if login==1:
             try:
-                flag=get.getDb().deplo.user.find_one({"username":self.username,"password":self.password})
+                flag=getDb().find_one({"username":self.username,"password":self.password})
                 print('flag value : ',flag,file=sys.stdout)
                 return flag
             except Exception as e:
@@ -38,8 +49,8 @@ class User():
                 return False
         else:
             try:
-                username=get.getDb().deplo.user.find_one({"username":self.username})
-                email=get.getDb().deplo.user.find_one({"email":self.email})
+                username=getDb().find_one({"username":self.username})
+                email=getDb().find_one({"email":self.email})
                 if (username and email) or (username or email):
                     flag=True
                 else:

@@ -43,6 +43,9 @@ def loginUser():
         session['id']=str(user["_id"])
         session['username']=username
         return redirect('/dashboard')
+    else:
+        flash("Error connecting to DB..")
+        return redirect('/login')
 
 
 def logout():

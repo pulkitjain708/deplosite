@@ -9,8 +9,8 @@ DEBUG = True
 
 DATABASE='deplo'
 
-MONGO_URI='mongodb+srv://root:root@deplo.tevs8.mongodb.net/{DATABASE}?retryWrites=true&w=majority'
-
+# MONGO_URI='mongodb+srv://root:root@deplo.tevs8.mongodb.net/{DATABASE}?retryWrites=true&w=majority'
+MONGO_URI='mongodb://localhost:27017/deplo'
 MAX_CONTENT_LENGTH=15*1000*1000
 
 #for linux

@@ -1,4 +1,4 @@
-from . import get
+
 import sys
 import config
 from pymongo import MongoClient
@@ -26,13 +26,13 @@ class Site():
 
     def save(self):
         try:
-            getDb().static.insert_one(self.site)
+            getDb().insert_one(self.site)
         except Exception as e:
             print(e)
 
     def getStaticSitesByUser(self,refId,projection):
         try:
-            return getDb().static.find({"userRef":refId},projection)
+            return getDb().find({"userRef":refId},projection)
         except Exception as e:
             print(e)
 

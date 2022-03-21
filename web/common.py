@@ -1,45 +1,37 @@
-# from datetime import datetime
-# import boto3
+from datetime import datetime
+import boto3
 
-#  BucketSizeBytes
-# NumberOfObjects
-# ReplicationLatency
-# 4xxErrors
-# TotalRequestLatency
-# AllRequests
+cw = boto3.client('cloudwatch')
+s3 = boto3.client('s3')
 
-# cw = boto3.client('cloudwatch')
+NumberOfObjects = {
+    'Name': 'StorageType',
+    'Value': 'AllStorageTypes'
+}
 
-# response = cw.get_metric_statistics(Namespace='AWS/S3', Dimensions=[
-#     {
-#         'Name': 'BucketName',
-#         'Value': 'blog-59796-deplosite.co'
-#     },
-#     {
-#         'Name': 'StorageType',
-#         'Value': 'StandardStorage'
-#     }
-# ],
-#     MetricName='BucketSizeBytes',
-#     StartTime=datetime(2022, 3, 1),
-#     EndTime=datetime(2022, 3, 20),
-#     Statistics=["SampleCount", "Average", "Sum", "Minimum",'Maximum'],
-#     Period=60*60*24)
+BucketSizeBytes = {
+    'Name': 'StorageType',
+    'Value': 'StandardStorage'
+}
 
-# response = cw.get_metric_statistics(Namespace='AWS/S3', Dimensions=[
-#     {
-#         'Name': 'BucketName',
-#         'Value': 'blog-59796-deplosite.co'
-#     },
-#     {
-#         'Name': 'StorageType',
-#         'Value': 'AllStorageTypes'
-#     }
-# ],
-#     MetricName='NumberOfObjects',
-#     StartTime=datetime(2022, 3, 1),
-#     EndTime=datetime(2022, 3, 20),
-#     Statistics=["SampleCount", "Average", "Sum", "Minimum",'Maximum'],
-#     Period=60*60*24)
-# print(response)
-# 
+Metrics = ['BucketSizeBytes', 'NumberOfObjects']
+
+for bucket in s3.list_buckets()['Buckets']:
+    name = bucket['Name']
+    print("----------------------------------------------------------------")
+    print("Bucket : ",name)
+    for metric in Metrics:
+        print(f"--------------{metric}-------------------")
+        response = cw.get_metric_statistics(Namespace='AWS/S3', Dimensions=[
+            {
+                'Name': 'BucketName',
+                'Value': name
+            },
+            NumberOfObjects if metric==Metrics[1] else BucketSizeBytes
+        ],
+            MetricName=metric,
+            StartTime=datetime(2022, 3, 1),
+            EndTime=datetime(2022, 3, 20),
+            Statistics=["SampleCount", "Average", "Sum", "Minimum", 'Maximum'],
+            Period=60*60*24*2)
+        print(response['Datapoints'])

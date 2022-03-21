@@ -7,7 +7,7 @@ from config import UPLOAD_PATH, ALLOWED
 from werkzeug.utils import secure_filename
 import os
 from shutil import unpack_archive
-from helper import checkStatic, uploadFiles, create_bucket,getThumbnail,removeBucket
+from helper import checkStatic, uploadFiles, create_bucket,getThumbnail,removeBucket,enableLogging
 from random import randint
 from models.staticSite import Site
 
@@ -49,6 +49,7 @@ def static():
         # if flag:
         #     flash(message+", Try Checking Status in List of Deployments")
         create_bucket(bucketName=bucketName, error=root, index=root)
+        enableLogging(bucketName)
         uploadFiles(dir=absPath, bucket=bucketName)
         imgUrl=getThumbnail(url)
         Site(objectId=id, title=title, root=root, description=description,

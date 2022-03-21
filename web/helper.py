@@ -9,19 +9,37 @@ import os
 import requests
 from requests.exceptions import HTTPError
 
+
+def enableLogging(bucketName):
+    s3 = boto3.resource('s3')
+    bucket_logging = s3.BucketLogging(bucketName)
+
+    BucketLoggingStatus = {
+        'LoggingEnabled': {
+            'TargetBucket': 'deplosite-logging',
+            'TargetPrefix': '{}:'.format(bucketName)
+        }
+    }
+
+    bucket_logging.put(
+        BucketLoggingStatus=BucketLoggingStatus)
+
+
 def getThumbnail(url):
-    response=os.popen("""curl -X POST https://hcti.io/v1/image -u '{}:{}' --data-urlencode url='{}' > out.json """.format(HCTI_ID, HCTI_KEY,url)).read()
+    response = os.popen(
+        """curl -X POST https://hcti.io/v1/image -u '{}:{}' --data-urlencode url='{}' > out.json """.format(HCTI_ID, HCTI_KEY, url)).read()
     with open('out.json') as f:
-        res=json.load(f)
+        res = json.load(f)
         return res['url']
 
+
 def removeBucket(bucketName):
-    cmd='aws s3 rb --force s3://{}'.format(bucketName)
-    response=os.popen(cmd).read()
+    cmd = 'aws s3 rb --force s3://{}'.format(bucketName)
+    response = os.popen(cmd).read()
     if "remove_bucket" in response.split(":"):
         return True
     else:
-        return False 
+        return False
 
 
 def mimeType(ext):
@@ -95,6 +113,7 @@ def create_bucket(bucketName='', error="", index="", region="ap-south-1"):
         return False
     # return True
 
+
 def uploadFiles(dir="", bucket=''):
     if dir == "" or bucket == "":
         return False, "No specifications provided"
@@ -123,5 +142,3 @@ def uploadFiles(dir="", bucket=''):
                 logging.error(e)
                 return False, "Error.."
     return True, "Website Up .."
-
-

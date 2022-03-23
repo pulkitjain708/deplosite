@@ -7,7 +7,8 @@ from config import UPLOAD_PATH, ALLOWED
 from werkzeug.utils import secure_filename
 import os
 from shutil import unpack_archive
-from helper import checkStatic, uploadFiles, create_bucket,getThumbnail,removeBucket,enableLogging
+from helper import (checkStatic, periodic, uploadFiles,
+                    create_bucket, getThumbnail, removeBucket, enableLogging)
 from random import randint
 from models.staticSite import Site
 
@@ -51,9 +52,9 @@ def static():
         create_bucket(bucketName=bucketName, error=root, index=root)
         enableLogging(bucketName)
         uploadFiles(dir=absPath, bucket=bucketName)
-        imgUrl=getThumbnail(url)
+        imgUrl = getThumbnail(url)
         Site(objectId=id, title=title, root=root, description=description,
-             error=root, bucketName=bucketName, url=url,img=imgUrl).save()
+             error=root, bucketName=bucketName, url=url, img=imgUrl).save()
         return redirect('/dashboard/new-site')
     else:
         flash(errs)
@@ -61,10 +62,14 @@ def static():
 
 
 def delete(bucketName):
-    flag=removeBucket(bucketName)
+    flag = removeBucket(bucketName)
     if flag:
         flash("Removed Bucket..")
     else:
         flash("Error Removing Bucket ..")
     return redirect("/dashboard/list-sites")
 
+
+def getLogs():
+    periodic()
+    return 'OK'

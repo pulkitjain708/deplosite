@@ -1,15 +1,6 @@
 from flask import Flask 
 import config
 import routes
-from s3logger import periodic
-from timeloop import Timeloop
-from datetime import timedelta
-
-t=Timeloop()
-
-@t.job(interval=timedelta(minutes=3))
-def every2hrs():
-    periodic()
 
 app = Flask(__name__)
 app.config.from_pyfile('config.py')

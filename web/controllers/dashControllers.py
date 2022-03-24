@@ -2,6 +2,7 @@ from flask import (render_template,
                     request as req,
                     session)
 from models.staticSite import Site
+from os import walk,path
 
 def sendDash():
     username=session['username']
@@ -21,3 +22,7 @@ def sendStats():
 def sendNewSite():
     username=session['username']
     return render_template('dashpages/deploy-options.html',username=username,page="New Site")
+
+def individualStats(bucketName):
+    if bucketName not in [""," "]:
+        pass

@@ -73,3 +73,4 @@ def delete(bucketName):
 def getLogs():
     periodic()
     return 'OK'
+

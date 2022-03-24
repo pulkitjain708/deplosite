@@ -4,7 +4,7 @@ import logging
 from botocore.exceptions import ClientError
 from platform import system
 import json
-from config import HCTI_ID, HCTI_KEY , delimiter
+from config import HCTI_ID, HCTI_KEY, delimiter
 import os
 import shutil
 import requests
@@ -144,6 +144,7 @@ def uploadFiles(dir="", bucket=''):
                 return False, "Error.."
     return True, "Website Up .."
 
+
 def periodic():
     s3 = boto3.client('s3')
     response = s3.list_objects(
@@ -163,25 +164,24 @@ def periodic():
                 prevFileName = currentFileName
                 l.append(item['Key'])
                 s3.download_file(
-                'deplosite-logging', item['Key'], os.path.join(pathName, item['Key'].split(":")[1]))
+                    'deplosite-logging', item['Key'], os.path.join(pathName, item['Key'].split(":")[1]))
             for item in l:
                 s3.delete_object(Bucket='deplosite-logging', Key=item)
     except Exception as e:
         print(e)
-    rem=[]
-    logsPath=os.path.join(os.getcwd(),'logs')
-    for index,(root,dir,files) in enumerate(os.walk(logsPath)):
-        if os.path.isdir(root) and index!=0:
+    rem = []
+    logsPath = os.path.join(os.getcwd(), 'logs')
+    for index, (root, dir, files) in enumerate(os.walk(logsPath)):
+        if os.path.isdir(root) and index != 0:
             rem.append(root)
-            logFileName=root.rsplit(delimiter,1)[1]
-            logFileNamePath=os.path.join(logsPath,"{}.csv".format(logFileName))
+            logFileName = root.rsplit(delimiter, 1)[1]
+            logFileNamePath = os.path.join(
+                logsPath, "{}.csv".format(logFileName))
             print(logFileNamePath)
-            with open(logFileNamePath,"a+") as filePointer:
+            with open(logFileNamePath, "a+") as filePointer:
                 for file in files:
-                    fileToRead=os.path.join(root,file)
-                    fileToReadPointer=open(fileToRead,'r')
+                    fileToRead = os.path.join(root, file)
+                    fileToReadPointer = open(fileToRead, 'r')
                     filePointer.write(fileToReadPointer.read()+"\n")
     for p in rem:
         shutil.rmtree(p)
-
-periodic()

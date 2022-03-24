@@ -2,20 +2,20 @@ from flask import (render_template,
                    request as req,
                    session)
 from models.staticSite import Site
-from os import walk, path , getcwd
+from os import walk, path, getcwd
 import boto3
-from datetime import date
+from datetime import date , datetime
 import pandas as pd
 
-rownames=['Bucket Owner', 'Bucket', 'Time', 'Time - Offset', 'Remote IP', 'Requester ARN/Canonical ID',
-                                          'Request ID',
-                                          'Operation', 'Key', 'Request-URI', 'HTTP status', 'Error Code', 'Bytes Sent', 'Object Size',
-                                          'Total Time',
-                                          'Turn-Around Time', 'Referrer', 'User-Agent', 'Version Id', 'Host Id', 'Signature Version',
-                                          'Cipher Suite',
-                                          'Authentication Type', 'Host Header', 'TLS version']
-usecols=[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12,
-                          13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24]
+rownames = ['Bucket Owner', 'Bucket', 'Time', 'Time - Offset', 'Remote IP', 'Requester ARN/Canonical ID',
+            'Request ID',
+            'Operation', 'Key', 'Request-URI', 'HTTP status', 'Error Code', 'Bytes Sent', 'Object Size',
+            'Total Time',
+            'Turn-Around Time', 'Referrer', 'User-Agent', 'Version Id', 'Host Id', 'Signature Version',
+            'Cipher Suite',
+            'Authentication Type', 'Host Header', 'TLS version']
+usecols = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12,
+           13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24]
 
 
 def sendDash():
@@ -59,9 +59,9 @@ def individualStats(bucketName):
     if bucketName not in ["", " "]:
         response = Site().userHasBucket(id, bucketName)
         if response:
+            
             todayDate = date.today()
             setDate = response['date']
-
             for metric in Metrics:
                 response = cw.get_metric_statistics(Namespace='AWS/S3', Dimensions=[
                     {
@@ -71,17 +71,17 @@ def individualStats(bucketName):
                     NumberOfObjects if metric == Metrics[1] else BucketSizeBytes
                 ],
                     MetricName=metric,
-                    StartTime=setDate,
-                    EndTime=todayDate,
+                    StartTime=datetime(setDate.year,setDate.month,setDate.day),
+                    EndTime=datetime(todayDate.year,todayDate.month,todayDate.day),
                     Statistics=["SampleCount", "Average",
                                 "Sum", "Minimum", 'Maximum'],
                     Period=60*60*24*2)
 
                 metricData[metric] = response['Datapoints']
-            
-            dataPath=path.join(getcwd(),'logs','{}.csv'.format(bucketName))
 
-            data=pd.read_csv(dataPath,sep=" ",names=rownames,usecols=usecols,engine='python')
+            dataPath = path.join(getcwd(), 'logs', '{}.csv'.format(bucketName))
+
+            data = pd.read_csv(dataPath, sep=" ", names=rownames,
+                               usecols=usecols, engine='python')
 
             return '{}'.format(data)
-            

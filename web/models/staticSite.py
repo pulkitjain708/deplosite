@@ -40,7 +40,7 @@ class Site():
 
     def userHasBucket(self, userId, bucketName):
         try:
-            doc = getDb().find_one({"userRef": userId, "bucketName": bucketName}, {"_id": 1})
+            doc = getDb().find_one({"userRef": userId, "bucketName": bucketName})
             return doc if doc else False
         except Exception as e:
             print(e)

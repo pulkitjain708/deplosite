@@ -4,7 +4,7 @@ import logging
 from botocore.exceptions import ClientError
 from platform import system
 import json
-from config import HCTI_ID, HCTI_KEY
+from config import HCTI_ID, HCTI_KEY , delimiter
 import os
 import shutil
 import requests
@@ -168,11 +168,12 @@ def periodic():
                 s3.delete_object(Bucket='deplosite-logging', Key=item)
     except Exception as e:
         print(e)
-
+    rem=[]
     logsPath=os.path.join(os.getcwd(),'logs')
     for index,(root,dir,files) in enumerate(os.walk(logsPath)):
         if os.path.isdir(root) and index!=0:
-            logFileName=root.rsplit("/",1)[1]
+            rem.append(root)
+            logFileName=root.rsplit(delimiter,1)[1]
             logFileNamePath=os.path.join(logsPath,"{}.csv".format(logFileName))
             print(logFileNamePath)
             with open(logFileNamePath,"a+") as filePointer:
@@ -180,5 +181,7 @@ def periodic():
                     fileToRead=os.path.join(root,file)
                     fileToReadPointer=open(fileToRead,'r')
                     filePointer.write(fileToReadPointer.read()+"\n")
-            shutil.rmtree(root)
+    for p in rem:
+        shutil.rmtree(p)
 
+periodic()

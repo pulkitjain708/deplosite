@@ -19,8 +19,10 @@ MAX_CONTENT_LENGTH=15*1000*1000
 #/mnt/c/Users/intern/project/uploads
 if system()=="Windows":
     UPLOAD_PATH="C:\\Users\\intern\\project\\uploads\\"
+    delimiter="\\"
 elif system()=="Linux":
     UPLOAD_PATH='/mnt/c/Users/intern/project/uploads'
+    delimiter="/"
 
 ALLOWED=['htm','html','js','css','png','jpeg','jpg','txt','csv','svg']
 

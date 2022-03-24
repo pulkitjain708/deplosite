@@ -83,5 +83,20 @@ def individualStats(bucketName):
 
             data = pd.read_csv(dataPath, sep=" ", names=rownames,
                                usecols=usecols, engine='python')
-
+            # data.to_csv('a.csv')
+            """
+            write queries for dataframe as 
+            Unique Requests from IP List
+            Total Requests
+            Average Bites Served
+            Average Object Size Served
+            Average Total Time
+            Average Turn Around Time
+            Referer list
+            Website GET Request , Excluding S3 Requests checking via UserAgent
+            Requests for other static Resources , each count in bar graph
+            Linear Graph representing TAT
+            Linear Graph representing TT
+            Linear Graph representing Object Size Served
+            """
             return '{}'.format(data)

@@ -2,6 +2,7 @@
 import sys
 import config
 from pymongo import MongoClient
+from datetime import date
 
 
 def getDb(collection="static"):
@@ -12,7 +13,7 @@ def getDb(collection="static"):
 class Site():
     site = {}
 
-    def __init__(self, objectId="", title="", root="index.html", description="", error="index.html", bucketName="", url="",img=""):
+    def __init__(self, objectId="", title="", root="index.html", description="", error="index.html", bucketName="", url="", img=""):
         self.site = {
             "userRef": objectId,
             "title": title,
@@ -21,7 +22,8 @@ class Site():
             "desc": description,
             'bucketName': bucketName,
             'url': url,
-            'img':img
+            'img': img,
+            'date':date.today()
         }
 
     def save(self):
@@ -30,10 +32,16 @@ class Site():
         except Exception as e:
             print(e)
 
-    def getStaticSitesByUser(self,refId,projection):
+    def getStaticSitesByUser(self, refId, projection):
         try:
-            return getDb().find({"userRef":refId},projection)
+            return getDb().find({"userRef": refId}, projection)
         except Exception as e:
             print(e)
 
-            
+    def userHasBucket(self, userId, bucketName):
+        try:
+            doc = getDb().find_one({"userRef": userId, "bucketName": bucketName}, {"_id": 1})
+            return doc if doc else False
+        except Exception as e:
+            print(e)
+            return False

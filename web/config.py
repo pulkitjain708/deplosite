@@ -1,7 +1,7 @@
 import os
 from platform import system
 
-SECRET_KEY = os.urandom(32)
+SECRET_KEY = "secretkeyforflaskapp"
 
 basedir = os.path.abspath(os.path.dirname(__file__))
 

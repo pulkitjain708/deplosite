@@ -173,7 +173,7 @@ def periodic():
     for index,(root,dir,files) in enumerate(os.walk(logsPath)):
         if os.path.isdir(root) and index!=0:
             logFileName=root.rsplit("/",1)[1]
-            logFileNamePath=os.path.join(logsPath,"{}.txt".format(logFileName))
+            logFileNamePath=os.path.join(logsPath,"{}.csv".format(logFileName))
             print(logFileNamePath)
             with open(logFileNamePath,"a+") as filePointer:
                 for file in files:

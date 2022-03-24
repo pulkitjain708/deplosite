@@ -2,9 +2,20 @@ from flask import (render_template,
                    request as req,
                    session)
 from models.staticSite import Site
-from os import walk, path
+from os import walk, path , getcwd
 import boto3
 from datetime import date
+import pandas as pd
+
+rownames=['Bucket Owner', 'Bucket', 'Time', 'Time - Offset', 'Remote IP', 'Requester ARN/Canonical ID',
+                                          'Request ID',
+                                          'Operation', 'Key', 'Request-URI', 'HTTP status', 'Error Code', 'Bytes Sent', 'Object Size',
+                                          'Total Time',
+                                          'Turn-Around Time', 'Referrer', 'User-Agent', 'Version Id', 'Host Id', 'Signature Version',
+                                          'Cipher Suite',
+                                          'Authentication Type', 'Host Header', 'TLS version']
+usecols=[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12,
+                          13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24]
 
 
 def sendDash():
@@ -67,5 +78,10 @@ def individualStats(bucketName):
                     Period=60*60*24*2)
 
                 metricData[metric] = response['Datapoints']
+            
+            dataPath=path.join(getcwd(),'logs','{}.csv'.format(bucketName))
 
+            data=pd.read_csv(dataPath,sep=" ",names=rownames,usecols=usecols,engine='python')
+
+            return '{}'.format(data)
             

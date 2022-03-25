@@ -45,3 +45,9 @@ class Site():
         except Exception as e:
             print(e)
             return False
+
+    def getImageLinksforUserSite(self, refId):
+        try:
+            return getDb().find({"userRef": refId},{"img":1,"_id":0})
+        except Exception as e:
+            print(e)

@@ -10,8 +10,9 @@
         <div class="card-body">
           <h2 class="card-title">{{ site.title }}</h2>
           <div class="card-actions justify-end">
-            <a href="{{ site.url }}" class="btn btn-primary">Visit Now</a>
-            <a href="/s3/delete/{{ site.bucketName }}" class="btn btn-primary">Delete Site..</a>
+            <a href="{{ site.url }}" class="btn btn-primary">Visit</a>
+            <a href="/s3/delete/{{ site.bucketName }}" class="btn btn-primary">X</a>
+            <a href="/dashboard/stats/{{ site.bucketName }}" class="btn btn-primary">stats</a>
           </div>
         </div>
       </div>

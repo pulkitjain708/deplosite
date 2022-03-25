@@ -1,310 +1,405 @@
-
-        {% include "layout/dashboard-layout.html" %}
-
-        {% block content %}
+{% include "layout/dashboard-layout.html" %} {% block content %}
 <!--Container-->
-    <div class="container w-full mx-auto pt-20">
+<textarea id="static_sources_requests" hidden>{{static_sources_requests}}</textarea>
+<textarea id="linear_tt" hidden>{{linear_tt}}</textarea>
+<textarea id="linear_tat" hidden>{{linear_tat}}</textarea>
+<div class="container w-full mx-auto pt-20">
+  <div class="w-full px-4 md:px-0 md:mt-8 mb-16 text-gray-800 leading-normal">
+    <!--Console Content-->
 
-        <div class="w-full px-4 md:px-0 md:mt-8 mb-16 text-gray-800 leading-normal">
-
-            <!--Console Content-->
-
-            <div class="flex flex-wrap">
-                <div class="w-full md:w-1/2 xl:w-1/3 p-3">
-                    <!--Metric Card-->
-                    <div class="bg-white border rounded shadow p-2">
-                        <div class="flex flex-row items-center">
-                            <div class="flex-shrink pr-4">
-                                <div class="rounded p-3 bg-green-600"><i class="fa fa-wallet fa-2x fa-fw fa-inverse"></i></div>
-                            </div>
-                            <div class="flex-1 text-right md:text-center">
-                                <h5 class="font-bold uppercase text-gray-500">Total Revenue</h5>
-                                <h3 class="font-bold text-3xl">$3249 <span class="text-green-500"><i class="fas fa-caret-up"></i></span></h3>
-                            </div>
-                        </div>
-                    </div>
-                    <!--/Metric Card-->
-                </div>
-                <div class="w-full md:w-1/2 xl:w-1/3 p-3">
-                    <!--Metric Card-->
-                    <div class="bg-white border rounded shadow p-2">
-                        <div class="flex flex-row items-center">
-                            <div class="flex-shrink pr-4">
-                                <div class="rounded p-3 bg-pink-600"><i class="fas fa-users fa-2x fa-fw fa-inverse"></i></div>
-                            </div>
-                            <div class="flex-1 text-right md:text-center">
-                                <h5 class="font-bold uppercase text-gray-500">Total Users</h5>
-                                <h3 class="font-bold text-3xl">249 <span class="text-pink-500"><i class="fas fa-exchange-alt"></i></span></h3>
-                            </div>
-                        </div>
-                    </div>
-                    <!--/Metric Card-->
-                </div>
-                <div class="w-full md:w-1/2 xl:w-1/3 p-3">
-                    <!--Metric Card-->
-                    <div class="bg-white border rounded shadow p-2">
-                        <div class="flex flex-row items-center">
-                            <div class="flex-shrink pr-4">
-                                <div class="rounded p-3 bg-yellow-600"><i class="fas fa-user-plus fa-2x fa-fw fa-inverse"></i></div>
-                            </div>
-                            <div class="flex-1 text-right md:text-center">
-                                <h5 class="font-bold uppercase text-gray-500">New Users</h5>
-                                <h3 class="font-bold text-3xl">2 <span class="text-yellow-600"><i class="fas fa-caret-up"></i></span></h3>
-                            </div>
-                        </div>
-                    </div>
-                    <!--/Metric Card-->
-                </div>
-                <div class="w-full md:w-1/2 xl:w-1/3 p-3">
-                    <!--Metric Card-->
-                    <div class="bg-white border rounded shadow p-2">
-                        <div class="flex flex-row items-center">
-                            <div class="flex-shrink pr-4">
-                                <div class="rounded p-3 bg-blue-600"><i class="fas fa-server fa-2x fa-fw fa-inverse"></i></div>
-                            </div>
-                            <div class="flex-1 text-right md:text-center">
-                                <h5 class="font-bold uppercase text-gray-500">Server Uptime</h5>
-                                <h3 class="font-bold text-3xl">152 days</h3>
-                            </div>
-                        </div>
-                    </div>
-                    <!--/Metric Card-->
-                </div>
-                <div class="w-full md:w-1/2 xl:w-1/3 p-3">
-                    <!--Metric Card-->
-                    <div class="bg-white border rounded shadow p-2">
-                        <div class="flex flex-row items-center">
-                            <div class="flex-shrink pr-4">
-                                <div class="rounded p-3 bg-indigo-600"><i class="fas fa-tasks fa-2x fa-fw fa-inverse"></i></div>
-                            </div>
-                            <div class="flex-1 text-right md:text-center">
-                                <h5 class="font-bold uppercase text-gray-500">To Do List</h5>
-                                <h3 class="font-bold text-3xl">7 tasks</h3>
-                            </div>
-                        </div>
-                    </div>
-                    <!--/Metric Card-->
-                </div>
-                <div class="w-full md:w-1/2 xl:w-1/3 p-3">
-                    <!--Metric Card-->
-                    <div class="bg-white border rounded shadow p-2">
-                        <div class="flex flex-row items-center">
-                            <div class="flex-shrink pr-4">
-                                <div class="rounded p-3 bg-red-600"><i class="fas fa-inbox fa-2x fa-fw fa-inverse"></i></div>
-                            </div>
-                            <div class="flex-1 text-right md:text-center">
-                                <h5 class="font-bold uppercase text-gray-500">Issues</h5>
-                                <h3 class="font-bold text-3xl">3 <span class="text-red-500"><i class="fas fa-caret-up"></i></span></h3>
-                            </div>
-                        </div>
-                    </div>
-                    <!--/Metric Card-->
-                </div>
+    <div class="flex flex-wrap">
+      <div class="w-full md:w-1/2 xl:w-1/3 p-3">
+        <!--Metric Card-->
+        <div class="bg-white border rounded shadow p-2">
+          <div class="flex flex-row items-center">
+            <div class="flex-shrink pr-4">
+              <div class="rounded p-3 bg-green-600">
+                <i class="fa fa-wallet fa-2x fa-fw fa-inverse"></i>
+              </div>
             </div>
-
-            <!--Divider-->
-            <hr class="border-b-2 border-gray-400 my-8 mx-4">
-
-            <div class="flex flex-row flex-wrap flex-grow mt-2">
-
-                <div class="w-full md:w-1/2 p-3">
-                    <!--Graph Card-->
-                    <div class="bg-white border rounded shadow">
-                        <div class="border-b p-3">
-                            <h5 class="font-bold uppercase text-gray-600">Graph</h5>
-                        </div>
-                        <div class="p-5">
-                            <canvas id="chartjs-7" class="chartjs" width="undefined" height="undefined"></canvas>
-                            <script>
-                            new Chart(document.getElementById("chartjs-7"), {
-                                "type": "bar",
-                                "data": {
-                                    "labels": ["January", "February", "March", "April"],
-                                    "datasets": [{
-                                        "label": "Page Impressions",
-                                        "data": [10, 20, 30, 40],
-                                        "borderColor": "rgb(255, 99, 132)",
-                                        "backgroundColor": "rgba(255, 99, 132, 0.2)"
-                                    }, {
-                                        "label": "Adsense Clicks",
-                                        "data": [5, 15, 10, 30],
-                                        "type": "line",
-                                        "fill": false,
-                                        "borderColor": "rgb(54, 162, 235)"
-                                    }]
-                                },
-                                "options": {
-                                    "scales": {
-                                        "yAxes": [{
-                                            "ticks": {
-                                                "beginAtZero": true
-                                            }
-                                        }]
-                                    }
-                                }
-                            });
-                            </script>
-                        </div>
-                    </div>
-                    <!--/Graph Card-->
-                </div>
-
-                <div class="w-full md:w-1/2 p-3">
-                    <!--Graph Card-->
-                    <div class="bg-white border rounded shadow">
-                        <div class="border-b p-3">
-                            <h5 class="font-bold uppercase text-gray-600">Graph</h5>
-                        </div>
-                        <div class="p-5">
-                            <canvas id="chartjs-0" class="chartjs" width="undefined" height="undefined"></canvas>
-                            <script>
-                            new Chart(document.getElementById("chartjs-0"), {
-                                "type": "line",
-                                "data": {
-                                    "labels": ["January", "February", "March", "April", "May", "June", "July"],
-                                    "datasets": [{
-                                        "label": "Views",
-                                        "data": [65, 59, 80, 81, 56, 55, 40],
-                                        "fill": false,
-                                        "borderColor": "rgb(75, 192, 192)",
-                                        "lineTension": 0.1
-                                    }]
-                                },
-                                "options": {}
-                            });
-                            </script>
-                        </div>
-                    </div>
-                    <!--/Graph Card-->
-                </div>
-
-                <div class="w-full md:w-1/2 xl:w-1/3 p-3">
-                    <!--Graph Card-->
-                    <div class="bg-white border rounded shadow">
-                        <div class="border-b p-3">
-                            <h5 class="font-bold uppercase text-gray-600">Graph</h5>
-                        </div>
-                        <div class="p-5">
-                            <canvas id="chartjs-1" class="chartjs" width="undefined" height="undefined"></canvas>
-                            <script>
-                            new Chart(document.getElementById("chartjs-1"), {
-                                "type": "bar",
-                                "data": {
-                                    "labels": ["January", "February", "March", "April", "May", "June", "July"],
-                                    "datasets": [{
-                                        "label": "Likes",
-                                        "data": [65, 59, 80, 81, 56, 55, 40],
-                                        "fill": false,
-                                        "backgroundColor": ["rgba(255, 99, 132, 0.2)", "rgba(255, 159, 64, 0.2)", "rgba(255, 205, 86, 0.2)", "rgba(75, 192, 192, 0.2)", "rgba(54, 162, 235, 0.2)", "rgba(153, 102, 255, 0.2)", "rgba(201, 203, 207, 0.2)"],
-                                        "borderColor": ["rgb(255, 99, 132)", "rgb(255, 159, 64)", "rgb(255, 205, 86)", "rgb(75, 192, 192)", "rgb(54, 162, 235)", "rgb(153, 102, 255)", "rgb(201, 203, 207)"],
-                                        "borderWidth": 1
-                                    }]
-                                },
-                                "options": {
-                                    "scales": {
-                                        "yAxes": [{
-                                            "ticks": {
-                                                "beginAtZero": true
-                                            }
-                                        }]
-                                    }
-                                }
-                            });
-                            </script>
-                        </div>
-                    </div>
-                    <!--/Graph Card-->
-                </div>
-
-                <div class="w-full md:w-1/2 xl:w-1/3 p-3">
-                    <!--Graph Card-->
-                    <div class="bg-white border rounded shadow">
-                        <div class="border-b p-3">
-                            <h5 class="font-bold uppercase text-gray-600">Graph</h5>
-                        </div>
-                        <div class="p-5"><canvas id="chartjs-4" class="chartjs" width="undefined" height="undefined"></canvas>
-                            <script>
-                            new Chart(document.getElementById("chartjs-4"), {
-                                "type": "doughnut",
-                                "data": {
-                                    "labels": ["P1", "P2", "P3"],
-                                    "datasets": [{
-                                        "label": "Issues",
-                                        "data": [300, 50, 100],
-                                        "backgroundColor": ["rgb(255, 99, 132)", "rgb(54, 162, 235)", "rgb(255, 205, 86)"]
-                                    }]
-                                }
-                            });
-                            </script>
-                        </div>
-                    </div>
-                    <!--/Graph Card-->
-                </div>
-
-                <div class="w-full md:w-1/2 xl:w-1/3 p-3">
-                    <!--Template Card-->
-                    <div class="bg-white border rounded shadow">
-                        <div class="border-b p-3">
-                            <h5 class="font-bold uppercase text-gray-600">Template</h5>
-                        </div>
-                        <div class="p-5">
-
-                        </div>
-                    </div>
-                    <!--/Template Card-->
-                </div>
-
-                <div class="w-full p-3">
-                    <!--Table Card-->
-                    <div class="bg-white border rounded shadow">
-                        <div class="border-b p-3">
-                            <h5 class="font-bold uppercase text-gray-600">Table</h5>
-                        </div>
-                        <div class="p-5">
-                            <table class="w-full p-5 text-gray-700">
-                                <thead>
-                                    <tr>
-                                        <th class="text-left text-blue-900">Name</th>
-                                        <th class="text-left text-blue-900">Side</th>
-                                        <th class="text-left text-blue-900">Role</th>
-                                    </tr>
-                                </thead>
-
-                                <tbody>
-                                    <tr>
-                                        <td>Obi Wan Kenobi</td>
-                                        <td>Light</td>
-                                        <td>Jedi</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Greedo</td>
-                                        <td>South</td>
-                                        <td>Scumbag</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Darth Vader</td>
-                                        <td>Dark</td>
-                                        <td>Sith</td>
-                                    </tr>
-                                </tbody>
-                            </table>
-
-                            <p class="py-2"><a href="#">See More issues...</a></p>
-
-                        </div>
-                    </div>
-                    <!--/table Card-->
-                </div>
-
-
+            <div class="flex-1 text-right md:text-center">
+              <h5 class="font-bold uppercase text-gray-500">
+                Number of Assets
+              </h5>
+              <h3 class="font-bold text-3xl">
+                {{ NumberOfObjects }}
+                <span class="text-green-500">
+                  <!-- <i class="fas fa-caret-up"></i> -->
+                </span>
+              </h3>
             </div>
-
-            <!--/ Console Content-->
-
+          </div>
         </div>
-
-
+        <!--/Metric Card-->
+      </div>
+      <div class="w-full md:w-1/2 xl:w-1/3 p-3">
+        <!--Metric Card-->
+        <div class="bg-white border rounded shadow p-2">
+          <div class="flex flex-row items-center">
+            <div class="flex-shrink pr-4">
+              <div class="rounded p-3 bg-pink-600">
+                <i class="fas fa-users fa-2x fa-fw fa-inverse"></i>
+              </div>
+            </div>
+            <div class="flex-1 text-right md:text-center">
+              <h5 class="font-bold uppercase text-gray-500">Total Requests</h5>
+              <h3 class="font-bold text-3xl">
+                {{ total_requests }}
+                <span class="text-pink-500"
+                  ><i class="fas fa-exchange-alt"></i
+                ></span>
+              </h3>
+            </div>
+          </div>
+        </div>
+        <!--/Metric Card-->
+      </div>
+      <div class="w-full md:w-1/2 xl:w-1/3 p-3">
+        <!--Metric Card-->
+        <div class="bg-white border rounded shadow p-2">
+          <div class="flex flex-row items-center">
+            <div class="flex-shrink pr-4">
+              <div class="rounded p-3 bg-pink-600">
+                <i class="fas fa-users fa-2x fa-fw fa-inverse"></i>
+              </div>
+            </div>
+            <div class="flex-1 text-right md:text-center">
+              <h5 class="font-bold uppercase text-gray-500">get request for website</h5>
+              <h3 class="font-bold text-3xl">
+                {{ web_rel_req }}
+                <span class="text-pink-500"
+                  ><i class="fas fa-exchange-alt"></i
+                ></span>
+              </h3>
+            </div>
+          </div>
+        </div>
+        <!--/Metric Card-->
+      </div>
+      <div class="w-full md:w-1/2 xl:w-1/3 p-3">
+        <!--Metric Card-->
+        <div class="bg-white border rounded shadow p-2">
+          <div class="flex flex-row items-center">
+            <div class="flex-shrink pr-4">
+              <div class="rounded p-3 bg-yellow-600">
+                <i class="fas fa-user-plus fa-2x fa-fw fa-inverse"></i>
+              </div>
+            </div>
+            <div class="flex-1 text-right md:text-center">
+              <h5 class="font-bold uppercase text-gray-500">
+                Add. Time taken to process Req.
+              </h5>
+              <h3 class="font-bold text-3xl">
+                {{average_turn_time}} ms
+                <span class="text-yellow-600"
+                  ><i class="fas fa-caret-up"></i
+                ></span>
+              </h3>
+            </div>
+          </div>
+        </div>
+        <!--/Metric Card-->
+      </div>
+      <div class="w-full md:w-1/2 xl:w-1/3 p-3">
+        <!--Metric Card-->
+        <div class="bg-white border rounded shadow p-2">
+          <div class="flex flex-row items-center">
+            <div class="flex-shrink pr-4">
+              <div class="rounded p-3 bg-blue-600">
+                <i class="fas fa-server fa-2x fa-fw fa-inverse"></i>
+              </div>
+            </div>
+            <div class="flex-1 text-right md:text-center">
+              <h5 class="font-bold uppercase text-gray-500">
+                Avg Bytes Served
+              </h5>
+              <h3 class="font-bold text-3xl">
+                {{ average_bytes_served }} Bytes
+              </h3>
+            </div>
+          </div>
+        </div>
+        <!--/Metric Card-->
+      </div>
+      <div class="w-full md:w-1/2 xl:w-1/3 p-3">
+        <!--Metric Card-->
+        <div class="bg-white border rounded shadow p-2">
+          <div class="flex flex-row items-center">
+            <div class="flex-shrink pr-4">
+              <div class="rounded p-3 bg-indigo-600">
+                <i class="fas fa-tasks fa-2x fa-fw fa-inverse"></i>
+              </div>
+            </div>
+            <div class="flex-1 text-right md:text-center">
+              <h5 class="font-bold uppercase text-gray-500">
+                Avg asset Size Served
+              </h5>
+              <h3 class="font-bold text-3xl">
+                {{ average_object_size }} Bytes
+              </h3>
+            </div>
+          </div>
+        </div>
+        <!--/Metric Card-->
+      </div>
+      <div class="w-full md:w-1/2 xl:w-1/3 p-3">
+        <!--Metric Card-->
+        <div class="bg-white border rounded shadow p-2">
+          <div class="flex flex-row items-center">
+            <div class="flex-shrink pr-4">
+              <div class="rounded p-3 bg-red-600">
+                <i class="fas fa-inbox fa-2x fa-fw fa-inverse"></i>
+              </div>
+            </div>
+            <div class="flex-1 text-right md:text-center">
+              <h5 class="font-bold uppercase text-gray-500">Total Site Size</h5>
+              <h3 class="font-bold text-3xl">
+                {{ BucketSizeBytes }} Bytes
+                <!-- <span class="text-red-500"><i class="fas fa-caret-up"></i></span> -->
+              </h3>
+            </div>
+          </div>
+        </div>
+        <!--/Metric Card-->
+        <!--Metric Card-->
+        <!--/Metric Card-->
+      </div>
+      <div class="w-full md:w-1/2 xl:w-1/3 p-3">
+        <!--Metric Card-->
+        <div class="bg-white border rounded shadow p-2">
+          <div class="flex flex-row items-center">
+            <div class="flex-shrink pr-4">
+              <div class="rounded p-3 bg-green-600">
+                <i class="fa fa-wallet fa-2x fa-fw fa-inverse"></i>
+              </div>
+            </div>
+            <div class="flex-1 text-right md:text-center">
+              <h5 class="font-bold uppercase text-gray-500">
+                Avg Time Taken for Response
+              </h5>
+              <h3 class="font-bold text-3xl">
+                {{ average_time }} ms
+                <span class="text-green-500">
+                  <!-- <i class="fas fa-caret-up"></i> -->
+                </span>
+              </h3>
+            </div>
+          </div>
+        </div>
+        <!--/Metric Card-->
+      </div>
     </div>
-    <!--/container-->
 
-    {% endblock %}
+    <!--Divider-->
+    <hr class="border-b-2 border-gray-400 my-8 mx-4" />
+
+      <div class="w-full md:w-1/2 p-3">
+        <!--Graph Card-->
+        <div class="bg-white border rounded shadow">
+          <div class="border-b p-3">
+            <h5 class="font-bold uppercase text-gray-600">Total Time to Respond for GET Requests</h5>
+          </div>
+          <div class="p-5">
+            <canvas
+              id="chartjs-0"
+              class="chartjs"
+              width="undefined"
+              height="undefined"
+            ></canvas>
+            <script>
+                let data1 = JSON.parse(document.getElementById('linear_tt').innerText)
+              new Chart(document.getElementById("chartjs-0"), {
+                type: "line",
+                data: {
+                  labels: data1.time ,
+                  datasets: [
+                    {
+                      label: "Response in ms",
+                      data: data1.tt,
+                      fill: false,
+                      borderColor: "rgb(75, 192, 192)",
+                      lineTension: 0.1,
+                    },
+                  ],
+                },
+                options: {},
+              });
+            </script>
+          </div>
+        </div>
+        <!--/Graph Card-->
+      </div>
+
+      <div class="w-full md:w-1/2 p-3">
+        <!--Graph Card-->
+        <div class="bg-white border rounded shadow">
+          <div class="border-b p-3">
+            <h5 class="font-bold uppercase text-gray-600">Time taken to Process Response</h5>
+          </div>
+          <div class="p-5">
+            <canvas
+              id="chartjs-1"
+              class="chartjs"
+              width="undefined"
+              height="undefined"
+            ></canvas>
+            <script>
+                let data3 = JSON.parse(document.getElementById('linear_tat').innerText)
+              new Chart(document.getElementById("chartjs-1"), {
+                type: "line",
+                data: {
+                  labels: data3.time ,
+                  datasets: [
+                    {
+                      label: "Time in ms",
+                      data: data3.tat,
+                      fill: false,
+                      borderColor: "rgb(75, 192, 192)",
+                      lineTension: 0.1,
+                    },
+                  ],
+                },
+                options: {},
+              });
+            </script>
+          </div>
+        </div>
+        <!--/Graph Card-->
+      </div>
+
+      <div class="w-full md:w-1/2 xl:w-1/3 p-3">
+        <!--Graph Card-->
+        <div class="bg-white border rounded shadow">
+          <div class="border-b p-3">
+            <h5 class="font-bold uppercase text-gray-600">Static Resources Requests</h5>
+          </div>
+          <div class="p-5">
+            <canvas
+              id="chartjs-12"
+              class="chartjs"
+              width="undefined"
+              height="undefined"
+            ></canvas>
+            <script>
+                let data = JSON.parse(document.getElementById('static_sources_requests').innerText)
+              new Chart(document.getElementById("chartjs-12"), {
+                type: "bar",
+                data: {
+                  labels: data.labels,
+                  datasets: [
+                    {
+                      label: "Number of Requests",
+                      data: data.values,
+                      fill: false,
+                      backgroundColor: [
+                        "rgba(255, 99, 132, 0.2)",
+                        "rgba(255, 159, 64, 0.2)",
+                        "rgba(255, 205, 86, 0.2)",
+                        "rgba(75, 192, 192, 0.2)",
+                        "rgba(54, 162, 235, 0.2)",
+                        "rgba(153, 102, 255, 0.2)",
+                        "rgba(201, 203, 207, 0.2)",
+                      ],
+                      borderColor: [
+                        "rgb(255, 99, 132)",
+                        "rgb(255, 159, 64)",
+                        "rgb(255, 205, 86)",
+                        "rgb(75, 192, 192)",
+                        "rgb(54, 162, 235)",
+                        "rgb(153, 102, 255)",
+                        "rgb(201, 203, 207)",
+                      ],
+                      borderWidth: 1,
+                    },
+                  ],
+                },
+                options: {
+                  scales: {
+                    yAxes: [
+                      {
+                        ticks: {
+                          beginAtZero: true,
+                        },
+                      },
+                    ],
+                  },
+                },
+              });
+            </script>
+          </div>
+        </div>
+        <!--/Graph Card-->
+      </div>
+
+      <hr class="border-b-2 border-gray-400 my-8 mx-4" />
+      <div class="w-full p-3">
+        <!-- Another Table for IPs -->
+        <div class="bg-white border rounded shadow">
+          <div class="border-b p-3">
+            <h5 class="font-bold uppercase text-gray-600">
+              Requests from IP's
+            </h5>
+          </div>
+          <div class="p-5">
+            {% for ip in unique_IP %}
+            <pre data-prefix=" "><code>{{ ip }}</code></pre>
+            {% endfor %}
+          </div>
+        </div>
+        <!-- END -->
+        <br />
+        <!-- Another Table for Referers -->
+        <div class="bg-white border rounded shadow">
+          <div class="border-b p-3">
+            <h5 class="font-bold uppercase text-gray-600">
+              Forwarded Requests from
+            </h5>
+          </div>
+          <div class="p-5">
+            {% for ref in referrer %}
+            <pre data-prefix=" "><code>{{ ref }}</code></pre>
+            {% endfor %}
+          </div>
+        </div>
+        <!-- END -->
+        <br />
+        
+        <!--Table Card-->
+        <div class="bg-white border rounded shadow">
+            <div class="border-b p-3">
+              <h5 class="font-bold uppercase text-gray-600">Static Site Resources Responses</h5>
+            </div>
+            <div class="p-5">
+                <div class="overflow-x-auto">
+                    <table class="table w-full">
+                      <!-- head -->
+                      <thead>
+                        <tr>
+                          <th>Resource</th>
+                          <th>Response</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {% for res in static_response_code %}
+                        <tr class="hover">
+                          <td>{{ res[0] }}</td>
+                          <td>{{ res[1] }}</td>
+                        </tr>
+                        {% endfor %}
+                      </tbody>
+                    </table>
+                  </div>
+            </div>
+          </div>
+        <!--Table Card-->
+        
+        <!--/table Card-->
+      </div>
+    </div>
+
+    <!--/ Console Content-->
+  </div>
+</div>
+<!--/container-->
+
+{% endblock %}

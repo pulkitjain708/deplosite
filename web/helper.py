@@ -6,6 +6,7 @@ from platform import system
 import json
 from config import HCTI_ID, HCTI_KEY, delimiter
 import os
+import time
 import shutil
 import requests
 from requests.exceptions import HTTPError
@@ -165,10 +166,12 @@ def periodic():
                 l.append(item['Key'])
                 s3.download_file(
                     'deplosite-logging', item['Key'], os.path.join(pathName, item['Key'].split(":")[1]))
+          
             for item in l:
                 s3.delete_object(Bucket='deplosite-logging', Key=item)
     except Exception as e:
         print(e)
+    
     rem = []
     logsPath = os.path.join(os.getcwd(), 'logs')
     for index, (root, dir, files) in enumerate(os.walk(logsPath)):
@@ -176,12 +179,16 @@ def periodic():
             rem.append(root)
             logFileName = root.rsplit(delimiter, 1)[1]
             logFileNamePath = os.path.join(
-                logsPath, "{}.csv".format(logFileName))
-            print(logFileNamePath)
+                logsPath, "{}.csv".format(logFileName)) 
+           
             with open(logFileNamePath, "a+") as filePointer:
                 for file in files:
                     fileToRead = os.path.join(root, file)
                     fileToReadPointer = open(fileToRead, 'r')
                     filePointer.write(fileToReadPointer.read()+"\n")
+                    fileToReadPointer.close()
+                filePointer.close()
+    
     for p in rem:
         shutil.rmtree(p)
+

@@ -83,20 +83,56 @@ def individualStats(bucketName):
 
             data = pd.read_csv(dataPath, sep=" ", names=rownames,
                                usecols=usecols, engine='python')
+            
             # data.to_csv('a.csv')
-            """
-            write queries for dataframe as 
-            Unique Requests from IP List
-            Total Requests
-            Average Bites Served
-            Average Object Size Served
-            Average Total Time
-            Average Turn Around Time
-            Referer list
-            Website GET Request , Excluding S3 Requests checking via UserAgent
-            Requests for other static Resources , each count in bar graph
-            Linear Graph representing TAT
-            Linear Graph representing TT
-            Linear Graph representing Object Size Served
-            """
-            return '{}'.format(data)
+            fixes=['Bytes Sent','Object Size','Total Time','Turn-Around Time']
+            data[fixes]=data[fixes].replace('-',0)
+            data[fixes]=data[fixes].astype(int)
+            # Metric 3 : unique ip
+            metricData['unique_IP']=data['Remote IP'].unique()
+            # Metric 4 : total requests
+            metricData['total_requests']=len(data)
+            # Metric 5 : average bites served
+            metricData['average_bytes_served']=data['Bytes Sent'].mean()
+            # Metric 6 : average object size 
+            metricData['average_object_size']=data['Object Size'].mean()
+            # Metric 7 : average total time
+            metricData['average_time']=data['Total Time'].mean()
+            # Metric 8 : average turn around time
+            metricData['average_turn_time']=data['Turn-Around Time'].mean()
+            # Metric 8 : referer list
+            metricData['referrer']=data['Referrer'].unique()
+            # website only requests , checking user agent
+            c=0
+            for agent in data['User-Agent']:
+                if 'Boto3' not in agent and 'S3Console' not in agent:
+                    c+=1
+            metricData['web_rel_req']=c
+            # Requests for other static Resources , each count in bar graph
+            newdf=[]
+            for index,(agent,key) in enumerate(zip(data['User-Agent'],data['Key'])):
+                if 'Boto3' not in agent and 'S3Console' not in agent:
+                    newdf.append(key)
+            new=pd.Series(newdf)
+            metricData['static_sources_requests']=new.value_counts()
+            # Requests for static resources and their response code
+            dt=[]
+            for index,(agent,key,status) in enumerate(zip(data['User-Agent'],data['Key'],data['HTTP status'])):
+                if 'Boto3' not in agent and 'S3Console' not in agent:
+                    dt.append([key,status])
+            metricData['static_response_code']=dt
+            # Linear Graph representing TAT
+            dt={"time":[],"tat":[]}
+            for index,(time,agent,tat) in enumerate(zip(data['Time'],data['User-Agent'],data['Turn-Around Time'])):
+                if 'Boto3' not in agent and 'S3Console' not in agent:
+                    dt['time'].append(time)
+                    dt['tat'].append(tat)
+            metricData['linear_tat']=dt
+            # Linear Graph representing TT
+            dt={"time":[],"tt":[]}
+            for index,(time,agent,tt) in enumerate(zip(data['Time'],data['User-Agent'],data['Total Time'])):
+                if 'Boto3' not in agent and 'S3Console' not in agent:
+                    dt['time'].append(time)
+                    dt['tt'].append(tt)
+            metricData['linear_tt']=dt
+            return '{}'.format(metricData)

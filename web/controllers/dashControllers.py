@@ -1,7 +1,7 @@
-from flask import (render_template,
+from flask import (redirect, render_template,
                    request as req,
                    session)
-from models.staticSite import Site
+from models.staticSite import Site,getDb
 from os import walk, path, getcwd
 import boto3
 from datetime import date, datetime
@@ -20,11 +20,23 @@ usecols = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12,
            13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24]
 
 
+def changeEmail(username):
+    email=req.form['email']
+    res=getDb(collection="user").find_one_and_update({"username":username},{"$set":{"email":email}})
+    print(res)
+    return redirect("/dashboard")
+
+def changePassword(username):
+    password=req.form['password']
+    res=getDb(collection="user").find_one_and_update({"username":username},{"$set":{"password":password}})
+    print(res)
+    return redirect('/dashboard')
+
 def sendDash():
     username = session['username']
     id = session['id']
     imgs = Site().getImageLinksforUserSite(id)
-    return render_template('dashpages/dash.html', username=username, page="Dashboard", images=imgs)
+    return render_template('dashpages/dash.html', username=username, page="Dashboard", images=imgs,id=id)
 
 
 def sendListSites():
@@ -32,12 +44,13 @@ def sendListSites():
     id = session['id']
     projection = {"title": 1, "url": 1, "_id": 0, "img": 1, "bucketName": 1}
     lst = Site().getStaticSitesByUser(id, projection)
-    return render_template('dashpages/listSites.html', username=username, page="List Sites", sites=lst)
+    return render_template('dashpages/listSites.html', username=username, page="List Sites", sites=lst,id=id)
 
 
 def sendNewSite():
     username = session['username']
-    return render_template('dashpages/deploy-options.html', username=username, page="New Site")
+    id = session['id']
+    return render_template('dashpages/deploy-options.html', username=username, page="New Site",id=id)
 
 
 def individualStats(bucketName):
@@ -143,4 +156,4 @@ def individualStats(bucketName):
                     dt['tt'].append(tt)
             metricData['linear_tt'] = json.dumps(dt)
             # return '{}'.format(metricData)
-            return render_template('dashpages/stats.html', username=username, page="Stats : {}".format(bucketName), **metricData)
+            return render_template('dashpages/stats.html', username=username, page="Stats : {}".format(bucketName), **metricData,id=id)

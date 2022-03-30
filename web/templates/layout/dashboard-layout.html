@@ -40,12 +40,12 @@
                         </button>
                         <div id="userMenu" class="bg-white rounded shadow-md mt-2 absolute mt-12 top-0 right-0 min-w-full overflow-auto z-30 invisible">
                             <ul class="list-reset">
-                                <li><a href="#" class="px-4 py-2 block text-gray-900 hover:bg-gray-400 no-underline hover:no-underline">My account</a></li>
-                                <li><a href="#" class="px-4 py-2 block text-gray-900 hover:bg-gray-400 no-underline hover:no-underline">Notifications</a></li>
-                                <li>
-                                    <hr class="border-t mx-2 border-gray-400">
-                                </li>
                                 <li><a href="/logout" class="px-4 py-2 block text-gray-900 hover:bg-gray-400 no-underline hover:no-underline">Logout</a></li>
+                                <li><a href="#my-account" class="px-4 py-2 block text-gray-900 hover:bg-gray-400 no-underline hover:no-underline">My account</a></li>
+                                <!-- <li><a href="#" class="px-4 py-2 block text-gray-900 hover:bg-gray-400 no-underline hover:no-underline">Notifications</a></li> -->
+                                <!-- <li>
+                                    <hr class="border-t mx-2 border-gray-400">
+                                </li> -->
                             </ul>
                         </div>
                     </div>
@@ -100,6 +100,39 @@
         </div>
     </nav>
     <!-- NAV BAR END -->
+
+    <div class="modal" id="my-account">
+        <div class="modal-box">
+          <h3 class="font-bold text-lg">Your Account</h3>
+          <p class="py-4">
+            <div class="form-control">
+                <label class="input-group">
+                  <span>Change Email</span>
+                  <form action="/dashboard/changeEmail/{{username}}" method="POST">
+                  <input type="email" name="email" class="input input-bordered">
+                    <button class="btn btn-square">
+                        Go
+                      </button>
+                  </form>
+                </label>
+                <br />
+              </div>
+              <div class="form-control">
+                <label class="input-group">
+                  <span>Change Password</span>
+                  <form action="/dashboard/changePassword/{{username}}" method="POST">
+                  <input type="password" name="password" class="input input-bordered">
+                    <button class="btn btn-square">
+                        Go  </button>
+                        </form>
+                </label>
+              </div>
+          </p>
+          <div class="modal-action">
+           <a href="#" class="btn">Cancel </a>
+          </div>
+        </div>
+      </div>
 
     {% block content %} {% endblock %}
 

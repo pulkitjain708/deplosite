@@ -28,3 +28,7 @@ ALLOWED=['htm','html','js','css','png','jpeg','jpg','txt','csv','svg']
 
 HCTI_ID="847ba16c-d12f-4720-83d6-efa8bd9eeaeb"
 HCTI_KEY="68444419-2562-4eda-9342-a012ccb4d5c9"
+
+GCID="835295933451-gb0s1am7266e75tjnnbbvd0lafafrcde.apps.googleusercontent.com"
+
+CLIENT_SECRET_PATH='C:\\Users\\intern\\project\\client_secret_835295933451-gb0s1am7266e75tjnnbbvd0lafafrcde.apps.googleusercontent.com.json'

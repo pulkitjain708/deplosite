@@ -73,6 +73,7 @@ def callback():
 app.register_blueprint(routes.mainRoutes.slash, url_prefix='/')
 app.register_blueprint(routes.dashRoutes.dash, url_prefix='/dashboard')
 app.register_blueprint(routes.s3Routes.s3RouteBP, url_prefix='/s3')
+app.register_blueprint(routes.dynamicRoutes.dynamicBP, url_prefix='/dynamic')
 
 if __name__ == '__main__':
     app.run(debug=True)

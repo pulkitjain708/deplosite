@@ -3,7 +3,7 @@ import sys
 import config
 from pymongo import MongoClient
 from datetime import date
-
+from bson.objectid import ObjectId
 
 def getDb(collection="dynamic"):
     mongo = MongoClient(config.MONGO_URI)
@@ -35,3 +35,17 @@ class DSite():
         except Exception as e:
             print(e)
 
+    def getName(self,id):
+        try:
+            title = getDb().find_one({"_id": ObjectId(id)},{"title":1,"_id":0})['title']
+            return title
+        except Exception as e:
+            print(e)
+
+    def toggleEC2_ON(self,id):
+        getDb().find_one_and_update({"_id": ObjectId(id)},{"$set":{"ec2_on":True}})
+
+    def setInstanceId(self,siteId,InstanceId):
+        getDb().find_one_and_update({"_id": ObjectId(siteId)},{"$set":{"instanceId":InstanceId}})
+
+    

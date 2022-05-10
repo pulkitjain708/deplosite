@@ -1,8 +1,21 @@
+import site
 from flask import (redirect, request as req, flash, session, jsonify)
 from models.dynSite import DSite
 from datetime import date
 from config import UPLOAD_PATH
 import os
+import boto3
+
+EC2_Settings={
+   # "AWS_REGION":'ap-south-1',
+    "KeyName":"deplosite",
+    "ImageId":"ami-0756a1c858554433e",
+    "InstanceType":"t2.micro",
+    "SecurityGroupIds":["sg-059f872cd3cee6310"],
+    "MinCount":1,
+    "MaxCount":1,
+    "SubnetId":" subnet-0c7ed55ec9ad92b21"
+}
 
 def dyn():
     id = session['id']
@@ -18,5 +31,21 @@ def dyn():
     return redirect('/dashboard')
 
 def ec2_on(siteId):
-    print(siteId)
-    return jsonify({"msg":"Instantiated !!"})
+    title=DSite().getName(siteId)
+    EC2_Settings['TagSpecifications']=[
+        {
+            'ResourceType': 'instance',
+            'Tags': [
+                {
+                    'Key': 'Name',
+                    'Value': title
+                },
+            ]
+        },
+    ]
+    ec2_resource = boto3.resource('ec2')
+    instances = ec2_resource.create_instances(**EC2_Settings)
+    for instance in instances:
+        DSite.setInstanceId(0,siteId,instance.id)
+    DSite().toggleEC2_ON(siteId)
+    return jsonify({"msg":f" {title} Instantiated !!"})

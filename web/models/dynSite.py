@@ -13,17 +13,25 @@ def getDb(collection="dynamic"):
 class DSite():
     site = {}
 
-    def __init__(self, objectId="", title="", project_path="",date_project=""):
+    def __init__(self, objectId="", title="", project_path="",date_project="",stack="php",flag_ec2=False):
         self.site={
             "userRef": objectId,
             "title": title,
             "path_project":project_path,
-            "date":date_project
+            "date":date_project,
+            "stack":stack,
+            "ec2_on":flag_ec2
         }
 
     def save(self):
         try:
             getDb().insert_one(self.site)
+        except Exception as e:
+            print(e)
+
+    def getSites(self,userRef):
+        try:
+            return getDb().find({"userRef": userRef},{"_id":1,"title":1,"ec2_on":1})
         except Exception as e:
             print(e)
 

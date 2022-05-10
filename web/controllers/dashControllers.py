@@ -2,6 +2,7 @@ from flask import (redirect, render_template,
                    request as req,
                    session)
 from models.staticSite import Site,getDb
+from models.dynSite import DSite
 from os import walk, path, getcwd
 import boto3
 from datetime import date, datetime
@@ -19,6 +20,13 @@ rownames = ['Bucket Owner', 'Bucket', 'Time', 'Time - Offset', 'Remote IP', 'Req
 usecols = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12,
            13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24]
 
+
+def sendDynamicSites():
+    username = session['username']
+    id = session['id']
+    sites=list(DSite().getSites(id))
+    print(sites)
+    return render_template('index.html',username=username,id=id,sites=sites)
 
 def changeEmail(username):
     email=req.form['email']
@@ -50,7 +58,8 @@ def sendListSites():
 def sendNewSite():
     username = session['username']
     id = session['id']
-    return render_template('dashpages/deploy-options.html', username=username, page="New Site",id=id)
+    
+    return render_template('dashpages/deploy-options.html', username=username,id=id)
 
 
 def individualStats(bucketName):

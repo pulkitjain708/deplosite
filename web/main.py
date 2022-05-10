@@ -9,6 +9,7 @@ import google.auth.transport.requests
 import requests
 from random import randint
 from models.user import User
+from flask_cors import CORS
 
 flow = Flow.from_client_secrets_file(
     client_secrets_file=config.CLIENT_SECRET_PATH,
@@ -18,6 +19,7 @@ flow = Flow.from_client_secrets_file(
 )
 
 app = Flask(__name__)
+CORS(app)
 app.config.from_pyfile('config.py')
 app.config['MAX_CONTENT_LENGTH'] = 15 * 1000 * 1000
 

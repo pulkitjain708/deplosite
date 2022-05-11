@@ -274,7 +274,7 @@ function ec2_on(id){
 function toggle_ec2(siteId,instanceId){
     fetch(`http://127.0.0.1:5000/dynamic/toggleEC2/${siteId}/${instanceId}`)
     .then(res=>res.json())
-    .then(data=>{alert(data.msg);window.location.href="localhost:5000/dashboard/dynamic-sites"})
+    .then(data=>{alert(data.msg);document.location.reload(true);})
 }
 
 </script>

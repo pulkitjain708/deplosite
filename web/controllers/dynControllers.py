@@ -49,3 +49,19 @@ def ec2_on(siteId):
         DSite.setInstanceId(0,siteId,instance.id)
     DSite().toggleEC2_ON(siteId)
     return jsonify({"msg":f" {title} Instantiated !!"})
+
+def toggleEC2(siteId,instanceId):
+    ec2 = boto3.resource('ec2')
+    for res in ec2.instances.filter(InstanceIds=[instanceId]):
+        if res.id==instanceId:
+            if res.state['Name']=='stopped':
+                res.start()
+                DSite().toggleEC2(instanceId)
+                return jsonify({"msg":f" {instanceId} Started !!"})
+            elif res.state['Name']=='running':
+                res.stop()
+                DSite().toggleEC2(instanceId)
+                return jsonify({"msg":f" {instanceId} Stopped !!"})
+            else:
+                return jsonify({"msg":f" {instanceId} Waiting to be in State !!"})
+    # return redirect("/dashboard/dynamic-sites")   

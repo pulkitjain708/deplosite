@@ -125,13 +125,17 @@
                     </button>
                     {% endif %}
 
-                    <button class="shadow bg-yellow-100 hover:bg-yellow-200 focus:shadow-outline focus:outline-none text-gray-700 font-bold py-2 px-4 rounded mr-4" type="button">
-                        Additional Action
+               
+                    {% if site['ec2_on'] %}
+                    <button onclick="toggle_ec2('{{site._id}}','{{site.instanceId}}')" class="shadow bg-yellow-700 hover:bg-yellow-500 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded mr-4" type="button">
+                        {% if site['ec2_toggled'] %}
+                        Turn EC2 OFF
+                        {% else %}
+                        Turn EC2 ON
+                        {% endif %}
                     </button>
+                    {% endif %}
 
-                    <button class="shadow bg-yellow-100 hover:bg-yellow-200 focus:shadow-outline focus:outline-none text-gray-700 font-bold py-2 px-4 rounded" type="button">
-                        Additional Action
-                    </button>
 
                 </div>
 
@@ -266,6 +270,13 @@ function ec2_on(id){
     .then(res=>res.json())
     .then(data=>alert(data.msg))
 }
+
+function toggle_ec2(siteId,instanceId){
+    fetch(`http://127.0.0.1:5000/dynamic/toggleEC2/${siteId}/${instanceId}`)
+    .then(res=>res.json())
+    .then(data=>{alert(data.msg);window.location.href="localhost:5000/dashboard/dynamic-sites"})
+}
+
 </script>
 
 </body>

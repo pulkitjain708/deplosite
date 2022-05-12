@@ -23,6 +23,11 @@
         - libapache2-mod-php
         - php-mysql
         - unzip
+        - python3-pip
+
+    - pip:
+        name: pexpect
+        state: present
 
     - shell: |
         chmod 777 /etc/apache2/mods-enabled/dir.conf
@@ -56,23 +61,6 @@
         name: apache2
         state: restarted
 
-    - name: Enable MySQL run on Startup
-      service: name=mysql state=started enabled=true
-
-    - name: Set MySQL Root Password
-      mysql_user:
-        login_host: "localhost"
-        login_user: "root"
-        login_password: ""
-        name: "root"
-        password: "root"
-        state: "present"
-
-    - name: Set New Database
-      mysql_db:
-        name: "{{ db_name }}"
-        state: "present"
-
     - name: Find SqlDump file
       find:
         paths: /var/www/html
@@ -81,9 +69,59 @@
 
     - set_fact:
         sqldump_path: "{{ sqldump['files'][0]['path'] }}"
-    
-    - name: Importing Data from SqlDump
-      mysql_db:
-        name: "{{ db_name }}"
-        state: import
-        target: "{{ sqldump_path }}"
+
+    - name: Change MySQL Password
+      expect:
+        command: mysql -u root -p 
+        responses:
+          Enter password: "" 
+          mysql>: "ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY 'root';exit;"
+      ignore_errors: true
+
+    - name: Create Database
+      expect:
+        command: mysql -u root -p 
+        responses:
+          Enter password: "root" 
+          mysql>: "create database {{ db_name }};exit;"
+      ignore_errors: true
+
+    - name: Import Database 
+      expect:
+        command: mysql -u root -p 
+        responses:
+          Enter password: "root" 
+          mysql>: "use {{ db_name }}; source {{ sqldump_path }};"
+      ignore_errors: true
+
+    - name: Enable MySQL run on Startup
+      service: 
+        name: mysql 
+        state: started 
+        enabled: true
+
+# ---------------------------------------------------------------------------------
+
+    # - name: MySQL | Changing the root password
+    #   mysql_user:
+    #     user: root
+    #     host: "{{item}}"
+    #     password: root
+    #     login_user: root
+    #     login_password: ""
+    #     priv: "*.*:ALL,GRANT"
+    #   with_items:
+    #     - 127.0.0.1
+    #     - ::1
+    #     - localhost
+
+    # - name: Set New Database
+    #   mysql_db:
+    #     name: "{{ db_name }}"
+    #     state: "present"
+
+    # - name: Importing Data from SqlDump
+    #   mysql_db:
+    #     name: "{{ db_name }}"
+    #     state: import
+    #     target: "{{ sqldump_path }}"

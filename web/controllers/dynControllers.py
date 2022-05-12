@@ -99,10 +99,7 @@ def deploy(siteId, instanceId):
     file.write(host_config)
     file.close()
     stream = os.popen("""
-    ansible-playbook /mnt/c/Users/intern/project/deplosite/web/tasks/php.yml 
-    -i /mnt/c/Users/intern/project/deplosite/web/tasks/host.yml 
-    --ssh-common-args='-o StrictHostKeyChecking=no' 
-    --extra-vars "root_file={} zipped_file_path={} db_name={} -vvv"
+    ansible-playbook /mnt/c/Users/intern/project/deplosite/web/tasks/php.yml -i /mnt/c/Users/intern/project/deplosite/web/tasks/host.yml --ssh-common-args='-o StrictHostKeyChecking=no' --extra-vars "root_file={} zipped_file_path={} db_name={} -vvv"
     """.format(siteDetails['rootFile'], path_project,siteDetails['dbname']))
     output = stream.read()
     print(output)

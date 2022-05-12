@@ -1,5 +1,5 @@
 ---
-- name: Starting Initializing Website
+- name: Starting Initializing PHP Website
   hosts: EC2
   gather_facts: true
   become: yes
@@ -24,16 +24,15 @@
         - php-mysql
         - unzip
 
-
     - shell: |
-         chmod 777 /etc/apache2/mods-enabled/dir.conf
+        chmod 777 /etc/apache2/mods-enabled/dir.conf
       become: yes
 
     - name: Replace default serving file with rootFile
       shell: |
         sed -i 's/index.html/{{root_file}}/g' /etc/apache2/mods-enabled/dir.conf
       become: yes
-    
+
     - name: Create Path to Download Zip
       file:
         path: /home/download
@@ -57,7 +56,34 @@
         name: apache2
         state: restarted
 
-    - name: Start MySql  
-      shell: "service mysql start"  
-    - name: Enable MySQL run on Startup  
+    - name: Enable MySQL run on Startup
       service: name=mysql state=started enabled=true
+
+    - name: Set MySQL Root Password
+      mysql_user:
+        login_host: "localhost"
+        login_user: "root"
+        login_password: ""
+        name: "root"
+        password: "root"
+        state: "present"
+
+    - name: Set New Database
+      mysql_db:
+        name: "{{ db_name }}"
+        state: "present"
+
+    - name: Find SqlDump file
+      find:
+        paths: /var/www/html
+        patterns: "*.sql"
+      register: sqldump
+
+    - set_fact:
+        sqldump_path: "{{ sqldump['files'][0]['path'] }}"
+    
+    - name: Importing Data from SqlDump
+      mysql_db:
+        name: "{{ db_name }}"
+        state: import
+        target: "{{ sqldump_path }}"

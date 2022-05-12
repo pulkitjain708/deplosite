@@ -22,7 +22,9 @@ class DSite():
             "date": date_project,
             "stack": stack,
             "ec2_on": flag_ec2,
-            "ec2_toggled": False
+            "ec2_toggled": False,
+            "instanceId":"",
+            "deployed":False
         }
 
     def save(self):

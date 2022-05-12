@@ -31,4 +31,7 @@ HCTI_KEY="68444419-2562-4eda-9342-a012ccb4d5c9"
 
 GCID="835295933451-gb0s1am7266e75tjnnbbvd0lafafrcde.apps.googleusercontent.com"
 
-CLIENT_SECRET_PATH='C:\\Users\\intern\\project\\client_secret_835295933451-gb0s1am7266e75tjnnbbvd0lafafrcde.apps.googleusercontent.com.json'
+if system()=="Windows":
+    CLIENT_SECRET_PATH='C:\\Users\\intern\\project\\client_secret_835295933451-gb0s1am7266e75tjnnbbvd0lafafrcde.apps.googleusercontent.com.json'
+elif system()=="Linux":
+    CLIENT_SECRET_PATH='/mnt/c/Users/intern/project/client_secret_835295933451-gb0s1am7266e75tjnnbbvd0lafafrcde.apps.googleusercontent.com.json'

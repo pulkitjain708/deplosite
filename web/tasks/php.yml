@@ -1,0 +1,22 @@
+---
+- name: Starting Initializing Website
+  hosts: EC2
+  gather_facts: true
+  become: true
+
+  tasks:
+    - apt:
+        update_cache: yes
+        force_apt_get: yes
+        cache_valid_time: 3600
+    - apt:
+        name: "{{ item }}"
+        update_cache: yes
+        state: latest
+      loop:
+        - apache2
+        - mysql-server
+        - php
+        - libapache2-mod-php
+        - php-mysql
+    

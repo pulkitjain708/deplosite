@@ -34,12 +34,13 @@ def dyn():
     title = req.form['title'].strip().lower()
     file = req.files['file']
     stack = req.form['stack']
+    dbname = req.form['db']
     rootFile = req.form['rootFile']
     filename = file.filename
     dateT = date.today()
     path = os.path.join(UPLOAD_PATH, "zipped", filename)
     dyS = DSite(objectId=id, title=title,
-                date_project=f'${dateT}', project_path=path, stack=stack,rootFile=rootFile)
+                date_project=f'${dateT}', project_path=path, stack=stack,rootFile=rootFile,dbname=dbname)
     file.save(path)
     dyS.save()
     return redirect('/dashboard')
@@ -97,7 +98,7 @@ def deploy(siteId, instanceId):
     file.write(host_config)
     file.close()
     stream = os.popen("""
-    ansible-playbook /mnt/c/Users/intern/project/deplosite/web/tasks/php.yml -i /mnt/c/Users/intern/project/deplosite/web/tasks/host.yml --ssh-common-args='-o StrictHostKeyChecking=no' --extra-vars "root_file={} zipped_file_path={}"
+    ansible-playbook /mnt/c/Users/intern/project/deplosite/web/tasks/php.yml -i /mnt/c/Users/intern/project/deplosite/web/tasks/host.yml --ssh-common-args='-o StrictHostKeyChecking=no' --extra-vars "root_file={} zipped_file_path={} -vvv"
     """.format(siteDetails['rootFile'],path_project))
     output=stream.read()
     print(output)

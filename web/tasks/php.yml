@@ -2,7 +2,7 @@
 - name: Starting Initializing Website
   hosts: EC2
   gather_facts: true
-  become: true
+  become: yes
 
   tasks:
     - name: Updating System Package Links
@@ -10,18 +10,6 @@
         update_cache: yes
         force_apt_get: yes
         cache_valid_time: 3600
-
-    - name: Uninstall Packages
-      apt:
-        name: "{{ item }}"
-        autoremove: yes
-        state: absent
-      loop:
-        - apache2
-        - mysql-server
-        - php
-        - libapache2-mod-php
-        - php-mysql
 
     - name: Installing Packages
       apt:
@@ -34,18 +22,17 @@
         - php
         - libapache2-mod-php
         - php-mysql
+        - unzip
+
+
+    - shell: |
+         chmod 777 /etc/apache2/mods-enabled/dir.conf
+      become: yes
 
     - name: Replace default serving file with rootFile
-      replace: 
-        path: /etc/apache2/mods-enabled/dir.conf 
-        regexp: 'index.html' 
-        replace: "{{ root_file }}"
-        backup: yes
-    
-    - name: Restart apache2 service
-      service:
-        name: apache2
-        state: restarted
+      shell: |
+        sed -i 's/index.html/{{root_file}}/g' /etc/apache2/mods-enabled/dir.conf
+      become: yes
     
     - name: Create Path to Download Zip
       file:
@@ -57,3 +44,20 @@
         src: "{{ zipped_file_path }}"
         dest: /home/download/
         mode: 0777
+      register: path_name
+
+    - name: Unarchive Zip and move to /var/www/html
+      unarchive:
+        src: "{{ path_name.dest }}"
+        dest: /var/www/html
+        remote_src: yes
+
+    - name: Restart apache2 service
+      service:
+        name: apache2
+        state: restarted
+
+    - name: Start MySql  
+      shell: "service mysql start"  
+    - name: Enable MySQL run on Startup  
+      service: name=mysql state=started enabled=true

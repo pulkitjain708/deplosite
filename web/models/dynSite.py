@@ -14,7 +14,7 @@ def getDb(collection="dynamic"):
 class DSite():
     site = {}
 
-    def __init__(self, objectId="", title="", project_path="", date_project="", stack="php", flag_ec2=False,rootFile="index.html"):
+    def __init__(self, objectId="", title="", project_path="", date_project="", stack="php", flag_ec2=False,rootFile="index.html",dbname="db"):
         self.site = {
             "userRef": objectId,
             "title": title,
@@ -25,7 +25,8 @@ class DSite():
             "ec2_toggled": False,
             "instanceId":"",
             "deployed":False,
-            "rootFile":rootFile
+            "rootFile":rootFile,
+            "dbname":dbname
         }
 
     def save(self):

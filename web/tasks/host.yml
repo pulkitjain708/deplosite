@@ -1,6 +1,6 @@
 
 [EC2]
-ec2_instance ansible_host=3.110.225.169
+ec2_instance ansible_host=65.1.65.192
 [EC2:vars]
 ansible_connection=ssh
 ansible_user=ubuntu

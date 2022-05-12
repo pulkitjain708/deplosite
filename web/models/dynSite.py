@@ -14,7 +14,7 @@ def getDb(collection="dynamic"):
 class DSite():
     site = {}
 
-    def __init__(self, objectId="", title="", project_path="", date_project="", stack="php", flag_ec2=False):
+    def __init__(self, objectId="", title="", project_path="", date_project="", stack="php", flag_ec2=False,rootFile="index.html"):
         self.site = {
             "userRef": objectId,
             "title": title,
@@ -24,7 +24,8 @@ class DSite():
             "ec2_on": flag_ec2,
             "ec2_toggled": False,
             "instanceId":"",
-            "deployed":False
+            "deployed":False,
+            "rootFile":rootFile
         }
 
     def save(self):
@@ -36,6 +37,12 @@ class DSite():
     def getSites(self, userRef):
         try:
             return getDb().find({"userRef": userRef})
+        except Exception as e:
+            print(e)
+
+    def getSiteBySiteId(self, siteId):
+        try:
+            return getDb().find_one({"_id":  ObjectId(siteId)})
         except Exception as e:
             print(e)
 

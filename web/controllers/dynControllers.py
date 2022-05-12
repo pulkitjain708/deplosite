@@ -34,11 +34,12 @@ def dyn():
     title = req.form['title'].strip().lower()
     file = req.files['file']
     stack = req.form['stack']
+    rootFile = req.form['rootFile']
     filename = file.filename
     dateT = date.today()
     path = os.path.join(UPLOAD_PATH, "zipped", filename)
     dyS = DSite(objectId=id, title=title,
-                date_project=f'${dateT}', project_path=path, stack=stack)
+                date_project=f'${dateT}', project_path=path, stack=stack,rootFile=rootFile)
     file.save(path)
     dyS.save()
     return redirect('/dashboard')
@@ -83,6 +84,8 @@ def toggleEC2(siteId, instanceId):
 
 
 def deploy(siteId, instanceId):
+    siteDetails=DSite().getSiteBySiteId(siteId)
+    path_project=siteDetails['path_project'].replace("C:\\","\\mnt\\c\\").replace("\\","/")
     PUBLIC_IP = []
     CONSTANT = "########"
     ec2 = boto3.resource('ec2')
@@ -94,8 +97,8 @@ def deploy(siteId, instanceId):
     file.write(host_config)
     file.close()
     stream = os.popen("""
-    ansible-playbook /mnt/c/Users/intern/project/deplosite/web/tasks/php.yml -i /mnt/c/Users/intern/project/deplosite/web/tasks/host.yml --ssh-common-args='-o StrictHostKeyChecking=no'
-    """)
+    ansible-playbook /mnt/c/Users/intern/project/deplosite/web/tasks/php.yml -i /mnt/c/Users/intern/project/deplosite/web/tasks/host.yml --ssh-common-args='-o StrictHostKeyChecking=no' --extra-vars "root_file={} zipped_file_path={}"
+    """.format(siteDetails['rootFile'],path_project))
     output=stream.read()
     print(output)
-    return jsonify({"msg": f" {instanceId} Stopped !!"})
+    return jsonify({"msg": f" {instanceId} Deploying  !!"})

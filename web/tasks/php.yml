@@ -5,11 +5,26 @@
   become: true
 
   tasks:
-    - apt:
+    - name: Updating System Package Links
+      apt:
         update_cache: yes
         force_apt_get: yes
         cache_valid_time: 3600
-    - apt:
+
+    - name: Uninstall Packages
+      apt:
+        name: "{{ item }}"
+        autoremove: yes
+        state: absent
+      loop:
+        - apache2
+        - mysql-server
+        - php
+        - libapache2-mod-php
+        - php-mysql
+
+    - name: Installing Packages
+      apt:
         name: "{{ item }}"
         update_cache: yes
         state: latest
@@ -19,4 +34,26 @@
         - php
         - libapache2-mod-php
         - php-mysql
+
+    - name: Replace default serving file with rootFile
+      replace: 
+        path: /etc/apache2/mods-enabled/dir.conf 
+        regexp: 'index.html' 
+        replace: "{{ root_file }}"
+        backup: yes
     
+    - name: Restart apache2 service
+      service:
+        name: apache2
+        state: restarted
+    
+    - name: Create Path to Download Zip
+      file:
+        path: /home/download
+        state: directory
+
+    - name: Download Project to directory
+      copy:
+        src: "{{ zipped_file_path }}"
+        dest: /home/download/
+        mode: 0777

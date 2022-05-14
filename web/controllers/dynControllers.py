@@ -86,6 +86,7 @@ def toggleEC2(siteId, instanceId):
 
 def deploy(siteId, instanceId):
     siteDetails = DSite().getSiteBySiteId(siteId)
+    stack = siteDetails['stack']
     path_project = siteDetails['path_project'].replace(
         "C:\\", "\\mnt\\c\\").replace("\\", "/")
     PUBLIC_IP = []
@@ -98,17 +99,20 @@ def deploy(siteId, instanceId):
     file = open(os.path.join(Path().absolute(), 'tasks', 'host.yml'), 'w')
     file.write(host_config)
     file.close()
-    stream = os.popen("""
+    if stack == 'php':
+        stream = os.popen("""
     ansible-playbook /mnt/c/Users/intern/project/deplosite/web/tasks/php.yml -i /mnt/c/Users/intern/project/deplosite/web/tasks/host.yml --ssh-common-args='-o StrictHostKeyChecking=no' --extra-vars "root_file={} zipped_file_path={} db_name={} -vvv"
-    """.format(siteDetails['rootFile'], path_project,siteDetails['dbname']))
-    output = stream.read()
-    print(output)
-    DSite().setDeployed(siteId)
+    """.format(siteDetails['rootFile'], path_project, siteDetails['dbname']))
+        output = stream.read()
+        print(output)
+    elif stack == 'javascript':
+        pass
+
     return jsonify({"msg": f" {instanceId} Deployed  !!"})
 
 
 def visit(siteId, instanceId):
-    PUBLIC_IP=[]
+    PUBLIC_IP = []
     ec2 = boto3.resource('ec2')
     for res in ec2.instances.filter(InstanceIds=[instanceId]):
         if res.id == instanceId:

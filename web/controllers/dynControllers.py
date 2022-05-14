@@ -20,7 +20,7 @@ ansible_ssh_private_key_file=/mnt/c/Users/intern/project/deplosite.pem
 EC2_Settings = {
     # "AWS_REGION":'ap-south-1',
     "KeyName": "deplosite",
-    "ImageId": "ami-0756a1c858554433e",
+    "ImageId": "ami-0cfedf42e63bba657",
     "InstanceType": "t2.micro",
     "SecurityGroupIds": ["sg-059f872cd3cee6310"],
     "MinCount": 1,
@@ -106,8 +106,12 @@ def deploy(siteId, instanceId):
         output = stream.read()
         print(output)
     elif stack == 'javascript':
-        pass
-
+        stream = os.popen("""
+    ansible-playbook /mnt/c/Users/intern/project/deplosite/web/tasks/node.yml -i /mnt/c/Users/intern/project/deplosite/web/tasks/host.yml --ssh-common-args='-o StrictHostKeyChecking=no' --extra-vars "root_file={} zipped_file_path={} db_name={} -vvv"
+    """.format(siteDetails['rootFile'], path_project, siteDetails['dbname']))
+        output = stream.read()
+        print(output)
+    DSite().setDeployed(siteId)
     return jsonify({"msg": f" {instanceId} Deployed  !!"})
 
 

@@ -123,29 +123,3 @@
         state: started 
         enabled: true
 
-      
-# ---------------------------------------------------------------------------------
-
-    # - name: MySQL | Changing the root password
-    #   mysql_user:
-    #     user: root
-    #     host: "{{item}}"
-    #     password: root
-    #     login_user: root
-    #     login_password: ""
-    #     priv: "*.*:ALL,GRANT"
-    #   with_items:
-    #     - 127.0.0.1
-    #     - ::1
-    #     - localhost
-
-    # - name: Set New Database
-    #   mysql_db:
-    #     name: "{{ db_name }}"
-    #     state: "present"
-
-    # - name: Importing Data from SqlDump
-    #   mysql_db:
-    #     name: "{{ db_name }}"
-    #     state: import
-    #     target: "{{ sqldump_path }}"

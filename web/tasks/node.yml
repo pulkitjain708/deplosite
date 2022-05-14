@@ -1,0 +1,61 @@
+---
+- name: Node Mongo Web Server Initialization
+  become: true
+  hosts: EC2
+  gather_facts: true
+  tasks:
+    
+    - name: Updating System Package Links
+      apt:
+        update_cache: yes
+        force_apt_get: yes
+        cache_valid_time: 3600
+    
+    - name: Installing Packages
+      apt:
+        name: "{{ item }}"
+        update_cache: yes
+        state: latest
+      loop:
+        - nodejs
+        - npm
+        - unzip
+        - mongodb
+
+    - file:
+        path: "{{ item }}"
+        state: directory
+        mode: 0777
+      loop:
+        - /home/downloads
+        - /data/db
+        - /home/ubuntu/project
+
+    - systemd:
+        name: mongodb
+        enabled: yes
+        state: started
+
+    - name: Download Project to directory
+      copy:
+        src: "{{ zipped_file_path }}"
+        dest: /home/download/
+        mode: 0777
+      register: path_name
+
+    - name: Unarchive Zip and move to project folder
+      unarchive:
+        src: "{{ path_name.dest }}"
+        dest: /home/ubuntu/project
+        remote_src: yes
+
+    - name: Installing node Dependencies
+      npm:
+        path: /home/ubuntu/project
+
+    - name: Start Node Process
+      shell: |
+          node /home/ubuntu/project/{{ root_file }}
+
+      
+    

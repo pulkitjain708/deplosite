@@ -81,14 +81,6 @@
           mysql>: "create database {{ db_name }};exit;"
       ignore_errors: true
 
-    - name: Import Database 
-      expect:
-        command: mysql -u root -p 
-        responses:
-          Enter password: "root" 
-          mysql>: "use {{ db_name }}; source {{ sqldump_path }};"
-      ignore_errors: true
-    
     - name: Find all php Files 
       find:
         paths: /var/www/html
@@ -107,9 +99,18 @@
     - name: Replace all instances of DB Connection
       replace:
         path: "{{ item }}"
-        regexp: mysqli_connect\([_',a-zA-Z\s]*\);
+        regexp: mysqli_connect\([_'$,a-zA-Z\s]*\);
         replace: "{{ new_db_conn }}"
       loop: "{{ php_files }}"
+
+    - name: Import Database 
+      expect:
+        command: mysql -u root -p 
+        responses:
+          Enter password: "root" 
+          mysql>: "use {{ db_name }}; source {{ sqldump_path }}; exit;"
+      ignore_errors: true
+    
 
     - name: Restart apache2 service
       service:
@@ -121,6 +122,8 @@
         name: mysql 
         state: started 
         enabled: true
+
+      
 # ---------------------------------------------------------------------------------
 
     # - name: MySQL | Changing the root password

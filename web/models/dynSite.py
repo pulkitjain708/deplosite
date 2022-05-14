@@ -68,3 +68,7 @@ class DSite():
             {"$set": {"ec2_toggled": {"$not": "$ec2_toggled"}}}
         ]
         )
+
+    def setDeployed(self, id):
+        getDb().find_one_and_update(
+            {"_id": ObjectId(id)}, {"$set": {"deployed": True}})

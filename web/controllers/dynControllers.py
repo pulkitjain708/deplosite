@@ -103,4 +103,14 @@ def deploy(siteId, instanceId):
     """.format(siteDetails['rootFile'], path_project,siteDetails['dbname']))
     output = stream.read()
     print(output)
-    return jsonify({"msg": f" {instanceId} Deploying  !!"})
+    DSite().setDeployed(siteId)
+    return jsonify({"msg": f" {instanceId} Deployed  !!"})
+
+
+def visit(siteId, instanceId):
+    PUBLIC_IP=[]
+    ec2 = boto3.resource('ec2')
+    for res in ec2.instances.filter(InstanceIds=[instanceId]):
+        if res.id == instanceId:
+            PUBLIC_IP.append(res.public_ip_address)
+    return jsonify({"msg": PUBLIC_IP[0]})

@@ -1,0 +1,83 @@
+PLAY [Starting Initializing PHP Website] ********************************************************************************************
+
+TASK [Gathering Facts] **************************************************************************************************************
+ok: [ec2_instance]
+
+TASK [Updating System Package Links] ************************************************************************************************
+changed: [ec2_instance]
+
+TASK [Installing Packages] **********************************************************************************************************
+changed: [ec2_instance] => (item=apache2)
+changed: [ec2_instance] => (item=mysql-server)
+changed: [ec2_instance] => (item=php)
+changed: [ec2_instance] => (item=libapache2-mod-php)
+changed: [ec2_instance] => (item=php-mysql)
+changed: [ec2_instance] => (item=unzip)
+changed: [ec2_instance] => (item=python3-pip)
+
+TASK [pip] **************************************************************************************************************************
+ok: [ec2_instance]
+
+TASK [shell] ************************************************************************************************************************
+changed: [ec2_instance]
+
+TASK [Replace default serving file with rootFile] ***********************************************************************************
+changed: [ec2_instance]
+
+TASK [Create Path to Download Zip] **************************************************************************************************
+changed: [ec2_instance]
+
+TASK [Download Project to directory] ************************************************************************************************
+changed: [ec2_instance]
+
+TASK [Unarchive Zip and move to /var/www/html] **************************************************************************************
+changed: [ec2_instance]
+
+TASK [Find SqlDump file] ************************************************************************************************************
+ok: [ec2_instance]
+
+TASK [set_fact] *********************************************************************************************************************
+ok: [ec2_instance]
+
+TASK [Change MySQL Password] ********************************************************************************************************
+changed: [ec2_instance]
+
+TASK [Create Database] **************************************************************************************************************
+changed: [ec2_instance]
+
+TASK [Find all php Files] ***********************************************************************************************************
+ok: [ec2_instance]
+
+TASK [set_fact] *********************************************************************************************************************
+ok: [ec2_instance]
+
+TASK [set_fact] *********************************************************************************************************************
+ok: [ec2_instance]
+
+TASK [Replace all instances of DB Connection] ***************************************************************************************
+ok: [ec2_instance] => (item=/var/www/html/profile.php)
+ok: [ec2_instance] => (item=/var/www/html/cart.php)
+ok: [ec2_instance] => (item=/var/www/html/payment_success.php)
+ok: [ec2_instance] => (item=/var/www/html/action.php)
+changed: [ec2_instance] => (item=/var/www/html/dbconnect.php)
+ok: [ec2_instance] => (item=/var/www/html/register.php)
+ok: [ec2_instance] => (item=/var/www/html/customer_registration.php)
+ok: [ec2_instance] => (item=/var/www/html/logout.php)
+ok: [ec2_instance] => (item=/var/www/html/customer_order.php)
+ok: [ec2_instance] => (item=/var/www/html/login.php)
+ok: [ec2_instance] => (item=/var/www/html/index.php)
+ok: [ec2_instance] => (item=/var/www/html/includes/header.php)
+ok: [ec2_instance] => (item=/var/www/html/includes/footer.php)
+ok: [ec2_instance] => (item=/var/www/html/includes/404.php)
+
+TASK [Import Database] **************************************************************************************************************
+changed: [ec2_instance]
+
+TASK [Restart apache2 service] ******************************************************************************************************
+changed: [ec2_instance]
+
+TASK [Enable MySQL run on Startup] **************************************************************************************************
+ok: [ec2_instance]
+
+PLAY RECAP **************************************************************************************************************************
+ec2_instance               : ok=20   changed=12   unreachable=0    failed=0    skipped=0    rescued=0    ignored=0

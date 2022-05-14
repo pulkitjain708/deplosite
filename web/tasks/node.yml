@@ -1,3 +1,5 @@
+# NO DATABASE MODIFICATION nor import, as NoSQL is flexible and no pre requisite data is available
+# NO PORT MODIFICATION, manually change to 3000 and upload , specify 3000 in nginx and app.listen() 
 ---
 - name: Node Mongo Web Server Initialization
   become: true
@@ -19,6 +21,7 @@
       loop:
         - nodejs
         - npm
+        - nginx
         - unzip
         - mongodb
 
@@ -57,5 +60,27 @@
       shell: |
           node /home/ubuntu/project/{{ root_file }}
 
+    - name: Writing sh to execute node on Startup
+      copy:
+        dest: /home/ubuntu/project/run.sh
+        content: |
+            node /home/ubuntu/project/{{ root_file }}
+
+    - shell: |
+        chmod +x /home/ubuntu/project/run.sh
+
+    - name: registering run.sh to run at startup
+      cron:
+        name: "run {{ root_file }}"
+        special_time: reboot
+        job: "sh /home/ubuntu/project/run.sh"
       
+    - lineinfile:
+        path: /etc/nginx/sites-available/default
+        regexp:  try_files $uri $uri/ =404;
+        insertbefore: 'try_files $uri $uri/ =404;'
+        line: 'proxy_pass http://127.0.0.1:3000;'
+
+    - shell: |
+        nginx -s reload
     

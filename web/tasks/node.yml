@@ -56,10 +56,6 @@
       npm:
         path: /home/ubuntu/project
 
-    - name: Start Node Process
-      shell: |
-          node /home/ubuntu/project/{{ root_file }}
-
     - name: Writing sh to execute node on Startup
       copy:
         dest: /home/ubuntu/project/run.sh
@@ -75,12 +71,15 @@
         special_time: reboot
         job: "sh /home/ubuntu/project/run.sh"
       
-    - lineinfile:
-        path: /etc/nginx/sites-available/default
-        regexp:  try_files $uri $uri/ =404;
-        insertbefore: 'try_files $uri $uri/ =404;'
-        line: 'proxy_pass http://127.0.0.1:3000;'
+    - shell: |
+        sed -i 's/try_files $uri $uri\/ =404;/try_files $uri $uri\/ =404;proxy_pass http:\/\/127.0.0.1:3000;/' /etc/nginx/sites-available/default
 
     - shell: |
         nginx -s reload
-    
+
+    - name: Start Node Process
+      shell: |
+          sh /home/ubuntu/project/run.sh&
+    - fail:
+        msg: Node Running
+          

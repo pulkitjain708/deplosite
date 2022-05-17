@@ -148,6 +148,12 @@
                     </button>
                     {% endif %}
 
+                    {% if site['deployed']  %}
+                    <a href="/dynamic/viewStats/{{site._id}}/{{site.instanceId}}">View Statistics</a>
+                    <!-- <button onclick="visit('{{site._id}}','{{site.instanceId}}')" class="shadow bg-yellow-700 hover:bg-yellow-500 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded mr-4" type="button">
+                        View Statistics
+                    </button> -->
+                    {% endif %}
 
                 </div>
 

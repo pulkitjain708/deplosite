@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Tailwind Starter Template - Day Admin Template: Tailwind Toolbox</title>
+    <meta name="description" content="description here">
+    <meta name="keywords" content="keywords,here">
+
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://unpkg.com/tailwindcss@2.2.19/dist/tailwind.min.css"/>
+    <!--Replace with your tailwind.css once created-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.bundle.min.js" integrity="sha256-XF29CBwU1MWLaGEnsELogU6Y6rcc5nCkhhx89nFMIDQ=" crossorigin="anonymous"></script>
+
+
+
+</head>
+
+<body class="bg-gray-100 font-sans leading-normal tracking-normal">
+
+    
+
+    <!--Container-->
+    <div class="container w-full mx-auto pt-20">
+
+        <div class="w-full px-4 md:px-0 md:mt-8 mb-16 text-gray-800 leading-normal">
+
+            <!--Console Content-->
+
+         
+
+            <!--Divider-->
+            <hr class="border-b-2 border-gray-400 my-8 mx-4">
+
+            <div class="flex flex-row flex-wrap flex-grow mt-2">
+
+                <div class="w-full md:w-1/2 p-3">
+                    <!--Graph Card-->
+                    <div class="bg-white border rounded shadow">
+                        <div class="border-b p-3">
+                            <h5 class="font-bold uppercase text-gray-600">{{title}} Network Packets In Graph</h5>
+                        </div>
+                        <div class="p-5">
+                            <img src = "{{url_for('static', filename='graphs/1.png')}}" />
+                        </div>
+                    </div>
+                    <!--/Graph Card-->
+                </div>
+
+                <div class="w-full md:w-1/2 p-3">
+                    <!--Graph Card-->
+                    <div class="bg-white border rounded shadow">
+                        <div class="border-b p-3">
+                            <h5 class="font-bold uppercase text-gray-600">{{title}} Network Packets Out Graph</h5>
+                        </div>
+                        <div class="p-5">
+                            <img src = "{{url_for('static', filename='graphs/2.png')}}" />
+                        </div>
+                    </div>
+                    <!--/Graph Card-->
+                </div>
+
+
+            </div>
+
+            <!-- Another -->
+
+            <div class="flex flex-row flex-wrap flex-grow mt-2">
+
+                <div class="w-full md:w-1/2 p-3">
+                    <!--Graph Card-->
+                    <div class="bg-white border rounded shadow">
+                        <div class="border-b p-3">
+                            <h5 class="font-bold uppercase text-gray-600">{{title}} CPU Utilization Graph</h5>
+                        </div>
+                        <div class="p-5">
+                            <img src = "{{url_for('static', filename='graphs/3.png')}}" />
+                        </div>
+                    </div>
+                    <!--/Graph Card-->
+                </div>
+
+                <div class="w-full md:w-1/2 p-3">
+                    <!--Graph Card-->
+                    <div class="bg-white border rounded shadow">
+                        <div class="border-b p-3">
+                            <h5 class="font-bold uppercase text-gray-600">{{title}} Network In Graph</h5>
+                        </div>
+                        <div class="p-5">
+                            <img src = "{{url_for('static', filename='graphs/4.png')}}" />
+                        </div>
+                    </div>
+                    <!--/Graph Card-->
+                </div>
+
+
+            </div>
+            <!--/ Console Content-->
+                <!-- Another -->
+                <div class="flex flex-row flex-wrap flex-grow mt-2">
+
+                    <div class="w-full md:w-1/2 p-3">
+                        <!--Graph Card-->
+                        <div class="bg-white border rounded shadow">
+                            <div class="border-b p-3">
+                                <h5 class="font-bold uppercase text-gray-600">{{title}} Network Out Graph</h5>
+                            </div>
+                            <div class="p-5">
+                                <img src = "{{url_for('static', filename='graphs/5.png')}}" />
+                            </div>
+                        </div>
+                        <!--/Graph Card-->
+                    </div>
+    
+                    <div class="w-full md:w-1/2 p-3">
+                        <!--Graph Card-->
+                        <div class="bg-white border rounded shadow">
+                            <div class="border-b p-3">
+                                <h5 class="font-bold uppercase text-gray-600">{{title}} Disk Read Bytes Graph</h5>
+                            </div>
+                            <div class="p-5">
+                                <img src = "{{url_for('static', filename='graphs/6.png')}}" />
+                            </div>
+                        </div>
+                        <!--/Graph Card-->
+                    </div>
+    
+    
+                </div>
+                <!--  ANOTHER-->
+                <div class="flex flex-row flex-wrap flex-grow mt-2">
+
+                    <div class="w-full md:w-1/2 p-3">
+                        <!--Graph Card-->
+                        <div class="bg-white border rounded shadow">
+                            <div class="border-b p-3">
+                                <h5 class="font-bold uppercase text-gray-600">{{title}} Disk Write Bytes Graph</h5>
+                            </div>
+                            <div class="p-5">
+                                <img src = "{{url_for('static', filename='graphs/7.png')}}" />
+                            </div>
+                        </div>
+                        <!--/Graph Card-->
+                    </div>
+    
+                    <div class="w-full md:w-1/2 p-3">
+                        <!--Graph Card-->
+                        <div class="bg-white border rounded shadow">
+                            <div class="border-b p-3">
+                                <h5 class="font-bold uppercase text-gray-600">{{title}} Disk Read Ops Graph</h5>
+                            </div>
+                            <div class="p-5">
+                                <img src = "{{url_for('static', filename='graphs/8.png')}}" />
+                            </div>
+                        </div>
+                        <!--/Graph Card-->
+                    </div>
+    
+    
+                </div>
+                <!-- Another -->
+                <div class="flex flex-row flex-wrap flex-grow mt-2">
+
+                    <div class="w-full md:w-1/2 p-3">
+                        <!--Graph Card-->
+                        <div class="bg-white border rounded shadow">
+                            <div class="border-b p-3">
+                                <h5 class="font-bold uppercase text-gray-600">{{title}} Disk Write Ops Graph</h5>
+                            </div>
+                            <div class="p-5">
+                                <img src = "{{url_for('static', filename='graphs/9.png')}}" />
+                            </div>
+                        </div>
+                        <!--/Graph Card-->
+                    </div>
+    
+                    <div class="w-full md:w-1/2 p-3">
+                        <!--Graph Card-->
+                        <div class="bg-white border rounded shadow">
+                            <div class="border-b p-3">
+                                <h5 class="font-bold uppercase text-gray-600">{{title}} CPU Credit Usage Graph</h5>
+                            </div>
+                            <div class="p-5">
+                                <img src = "{{url_for('static', filename='graphs/10.png')}}" />
+                            </div>
+                        </div>
+                        <!--/Graph Card-->
+                    </div>
+    
+    
+                </div>
+                <!-- Another -->
+                <div class="flex flex-row flex-wrap flex-grow mt-2">
+
+                    <div class="w-full md:w-1/2 p-3">
+                        <!--Graph Card-->
+                        <div class="bg-white border rounded shadow">
+                            <div class="border-b p-3">
+                                <h5 class="font-bold uppercase text-gray-600">{{title}} CPU Credit Balance Graph</h5>
+                            </div>
+                            <div class="p-5">
+                                <img src = "{{url_for('static', filename='graphs/11.png')}}" />
+                            </div>
+                        </div>
+                        <!--/Graph Card-->
+                    </div>
+    
+                    <div class="w-full md:w-1/2 p-3">
+                        <!--Graph Card-->
+                        <div class="bg-white border rounded shadow">
+                            <div class="border-b p-3">
+                                <h5 class="font-bold uppercase text-gray-600">{{title}} CPU Credit Balance Graph</h5>
+                            </div>
+                            <div class="p-5">
+                                <img src = "{{url_for('static', filename='graphs/11.png')}}" />
+                            </div>
+                        </div>
+                        <!--/Graph Card-->
+                    </div>
+    
+    
+                </div>
+            </div>
+
+
+    </div>
+    <!--/container-->
+
+   
+
+
+</body>
+
+</html>

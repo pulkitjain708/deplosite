@@ -58,7 +58,6 @@ def sendListSites():
 def sendNewSite():
     username = session['username']
     id = session['id']
-    
     return render_template('dashpages/deploy-options.html', username=username,id=id)
 
 

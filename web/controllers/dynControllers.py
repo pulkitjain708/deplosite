@@ -1,5 +1,5 @@
 import site
-from flask import (redirect, request as req, flash, session, jsonify)
+from flask import (redirect, request as req, flash, session, jsonify,render_template)
 from zmq import PUB
 from models.dynSite import DSite
 from datetime import date
@@ -7,6 +7,7 @@ from config import UPLOAD_PATH
 import os
 import boto3
 from pathlib import Path
+from graphHelper import genGraphs
 
 HOST_CONFIG = '''
 [EC2]
@@ -122,3 +123,8 @@ def visit(siteId, instanceId):
         if res.id == instanceId:
             PUBLIC_IP.append(res.public_ip_address)
     return jsonify({"msg": PUBLIC_IP[0]})
+
+def visitStatsPage(siteId, instanceId):
+    title=DSite().getName(siteId)
+    genGraphs(instanceId)
+    return render_template('dashpages/dstats.html',title=title)

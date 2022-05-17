@@ -8,4 +8,5 @@ dynamicBP.route('/ec2-on/<string:siteId>', methods=['GET'])(controllers.dynContr
 dynamicBP.route('/toggleEC2/<string:siteId>/<string:instanceId>', methods=['GET'])(controllers.dynControllers.toggleEC2)
 dynamicBP.route('/deploy/<string:siteId>/<string:instanceId>', methods=['GET'])(controllers.dynControllers.deploy)
 dynamicBP.route('/visit/<string:siteId>/<string:instanceId>', methods=['GET'])(controllers.dynControllers.visit)
+dynamicBP.route('/viewStats/<string:siteId>/<string:instanceId>', methods=['GET'])(controllers.dynControllers.visitStatsPage)
     
